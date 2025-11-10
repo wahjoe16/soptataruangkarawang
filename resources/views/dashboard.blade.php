@@ -1,63 +1,99 @@
 @extends('admin_layout.app')
 
+@push('top_css')
+    <!-- Datatable -->
+    <link href="{{ asset('/focus/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 
-    <div class="row">
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="stat-widget-two card-body">
-                    <div class="stat-content">
-                        <div class="stat-text">Today Expenses </div>
-                        <div class="stat-digit"> <i class="fa fa-usd"></i>8500</div>
+    @if (Auth::user()->level == 'Ketua Tim' || Auth::user()->level == 'Kepala Bidang')
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            Data Permohonan
+                        </h5>
                     </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Rencana Kegiatan</th>
+                                        <th>Kode SOP</th>
+                                        <th>Evaluator</th>
+                                        <th>Sisa Waktu</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($applicationKatim as $key => $value)
+                                        <tr>
+                                            <td class="text-muted">{{ $key+1 }}</td>
+                                            <td class="text-muted">{{ $value['name'] }}</td>
+                                            <td class="text-muted">{{ $value['sop']['code'] }}</td>
+
+                                            @if ($value['user_id'] == null)
+                                                <td class="text-muted"><span class="badge bg-warning text-muted">Not Assign</span></td>
+                                            @else
+                                                <td class="text-muted">{{ $value['user']['name'] }}</td>
+                                            @endif
+
+                                            <?php
+                                                $start = new DateTime();
+                                                $end = new DateTime($value['date_deadline']);
+                                                // $sisaWaktu = date_diff($start, $end);
+                                                $sisaWaktu = $start->diff($end);
+
+                                                $weekDay = 0;
+                                                $day = clone $start;
+
+                                                while($day <= $end) {
+                                                    $thisDay = $day->format('N');
+                                                    if ($thisDay >= 1 && $thisDay <=5) {
+                                                        $weekDay++;
+                                                    }
+                                                    $day->modify('+1 day');
+                                                }
+                                            ?> 
+
+                                            @if ($weekDay >= 8)
+                                                <td><span class="badge bg-success text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                            @elseif ($weekDay > 4)
+                                                <td><span class="badge bg-warning text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                            @elseif ($weekDay < 4)
+                                                <td><span class="badge bg-danger text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                            @endif
+
+                                            <td>
+                                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Rencana Kegiatan</th>
+                                        <th>Kode SOP</th>
+                                        <th>Evaluator</th>
+                                        <th>Sisa Waktu</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="stat-widget-two card-body">
-                    <div class="stat-content">
-                        <div class="stat-text">Income Detail</div>
-                        <div class="stat-digit"> <i class="fa fa-usd"></i>7800</div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-primary w-75" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="stat-widget-two card-body">
-                    <div class="stat-content">
-                        <div class="stat-text">Task Completed</div>
-                        <div class="stat-digit"> <i class="fa fa-usd"></i> 500</div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-warning w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="stat-widget-two card-body">
-                    <div class="stat-content">
-                        <div class="stat-text">Task Completed</div>
-                        <div class="stat-digit"> <i class="fa fa-usd"></i>650</div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger w-65" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- /# card -->
-        </div>
-        <!-- /# column -->
-    </div>
+    @endif
+    
+
+
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8">
             <div class="card">
@@ -568,3 +604,9 @@
     </div>
 
 @endsection
+
+@push('bottom_scripts')
+    <!-- Datatable -->
+    <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+@endpush

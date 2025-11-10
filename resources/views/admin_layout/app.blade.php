@@ -13,6 +13,9 @@
     <link href="{{ asset('/focus/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/focus/css/style.css') }}" rel="stylesheet">
 
+    {{-- MDI icons --}}
+    <link rel="stylesheet" href="{{ asset('/public/focus/vendor/mdi/css/materialdesignicons.min.css') }}">
+
     @stack('top_css')
 
 </head>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Application;
+use App\Models\ApplicationActivity;
 use App\Models\Sop;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -85,11 +87,14 @@ class ApplicationController extends Controller
 
     public function reviewApplication($id)
     {
+        $application = Application::where('id', $id)->with(['sop', 'user'])->first();
+
         $data = [
             'menuApplicationsCheck' => 'active',
             'title' => 'Review Permohonan',
-            'application' => Application::where('id', $id)->with(['sop', 'user'])->first(),
+            'application' => $application,
             'evaluators' => User::where('level', 'Evaluator')->get(),
+            
         ];
 
         return view('application.review', $data);
@@ -105,9 +110,55 @@ class ApplicationController extends Controller
         // Update aplikasi dengan evaluator yang ditugaskan
         $application = Application::findOrFail($id);
         $application->user_id = $request->input('user_id');
-        $application->status_1 = 1;
         $application->save();
 
-        return redirect()->route('applications.check')->with('success', 'Permohonanberhasil ditugaskan ke Evaluator');
+        $activity = Activity::where('sop_id', $application['sop_id'])->get();
+        foreach($activity as $key => $value){
+            $appActivity = new ApplicationActivity();
+            $appActivity->application_id = $application['id'];
+            $appActivity->activity_id = $value['id'];
+            $appActivity->save();
+        }
+
+        return redirect()->route('applications.view')->with('success', 'Permohonanberhasil ditugaskan ke Evaluator');
+    }
+
+    public function viewEvaluatorApplication()
+    {
+        $application = Application::with('sop')->where('user_id', Auth::user()->id)->get();
+
+        $data = [
+            'menuMyApplications' => 'active',
+            'title' => 'List Permohonan',
+            'application' => $application
+        ];
+
+        return view('application.evaluator_applications', $data);
+    }
+
+    public function evaluatorApplicationDetail($id)
+    {
+        $data = [
+            'menuEvaluatorApplications' => 'active',
+            'title' => 'Detail Permohonan',
+            'application' => Application::where('id', $id)->with(['sop', 'user'])->first(),
+            'appActivity' => ApplicationActivity::where('application_id', $id)->get(),
+        ];
+        
+        return view('application.evaluator_application_detail', $data);
+    }
+
+    public function updateStatusApplication(Request $request, $id)
+    {
+        $progress = ApplicationActivity::find($id);
+
+        if(!$progress){
+            return response()->json(['error' => 'Item not found'], 404);
+        }
+
+        $progress->status = $request->input('status');
+        $progress->save();
+
+        return redirect()->back()->with('success', 'Status progress permohonan berhasil diupdate');
     }
 }
