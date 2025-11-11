@@ -78,7 +78,12 @@
                     </li>
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                            <img width="35" src="{{ asset('/focus/images/avatar/1.png') }}" alt="">
+                            @if (empty(Auth::user()->photo))
+                                <img width="35" src="{{ asset('/focus/images/avatar/1.png') }}" alt="">
+                            @else
+                                <img width="35" src="{{ asset('/user/photo/'. Auth::user()->photo) }}" alt="">
+                            @endif
+                            
                         </a><h6>{{ Auth::user()->name }}</h6>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="{{ route('profile.edit') }}" class="dropdown-item">
