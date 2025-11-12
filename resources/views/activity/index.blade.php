@@ -37,6 +37,7 @@
                                     <th>No</th>
                                     <th>Kode SOP</th>
                                     <th>Aktivitas</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -46,8 +47,13 @@
                                         <td class="text-muted">{{ $key+1 }}</td>
                                         <td class="text-muted">{{ $value['sop']['code'] }}</td>
                                         <td class="text-muted">{{ $value['name'] }}</td>
+                                        @if ($value['status'] == 1)
+                                            <td class="text-muted"><span class="badge badge-success">Aktif</span></td>
+                                        @else
+                                            <td class="text-muted"><span class="badge badge-danger">Non Aktif</span></td>
+                                        @endif
                                         <td>
-                                            <a href="#" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
+                                            <a href="{{ route('activity.edit', $value['id']) }}" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
                                             <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>
@@ -58,6 +64,7 @@
                                     <th>No</th>
                                     <th>Kode SOP</th>
                                     <th>Aktivitas</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>

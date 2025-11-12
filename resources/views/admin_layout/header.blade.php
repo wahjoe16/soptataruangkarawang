@@ -16,7 +16,7 @@
                 </div>
 
                 <ul class="navbar-nav header-right">
-                    <li class="nav-item dropdown notification_dropdown">
+                    {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                             <i class="mdi mdi-bell"></i>
                             <div class="pulse-css"></div>
@@ -75,7 +75,7 @@
                             <a class="all-notification" href="#">See all notifications <i
                                     class="ti-arrow-right"></i></a>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                             @if (empty(Auth::user()->photo))
@@ -89,10 +89,6 @@
                             <a href="{{ route('profile.edit') }}" class="dropdown-item">
                                 <i class="icon-user"></i>
                                 <span class="ml-2">Profile </span>
-                            </a>
-                            <a href="./email-inbox.html" class="dropdown-item">
-                                <i class="icon-envelope-open"></i>
-                                <span class="ml-2">Inbox </span>
                             </a>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf

@@ -57,8 +57,8 @@
                                             <td class="text-muted"><span class="badge bg-danger">Non Aktif</span></td>
                                         @endif
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>&nbsp;
-                                            <a href="#" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
+                                            <a href="{{ route('users.view', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>&nbsp;
+                                            <a href="{{ route('users.edit', $value['id']) }}" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
                                             <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>

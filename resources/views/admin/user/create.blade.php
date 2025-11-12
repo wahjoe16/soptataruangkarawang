@@ -46,7 +46,7 @@
                                 <div class="form-group col-12">
                                     <label>Jabatan</label>
                                     <select class="form-control input-rounded" name="level"  @error('level') is-invalid @enderror>
-                                        <option value="">-- Pilih Jabatan --</option>
+                                        <option value="">Pilih Jabatan</option>
                                         <option value="Admin" {{ old('level') == 'Admin' ? 'selected' : '' }}>Admin</option>
                                         <option value="Front Office" {{ old('level') == 'Front Office' ? 'selected' : '' }}>Front Office</option>
                                         <option value="Evaluator" {{ old('level') == 'Evaluator' ? 'selected' : '' }}>Evaluator</option>

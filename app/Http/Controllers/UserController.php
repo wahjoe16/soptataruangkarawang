@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -46,5 +47,49 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
+    }
+
+    public function view($id)
+    {
+        $data = [
+            'title' => 'Detail User',
+            'user' => User::find($id),
+            'menuUser' => 'active',
+        ];
+
+        return view('admin.user.view', $data);
+    }
+
+    public function edit($id)
+    {
+        $data = [
+            'title' => 'Edit User',
+            'user' => User::find($id),
+            'menuUser' => 'active',
+        ];
+
+        return view('admin.user.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request['name'];
+        $user->nip = $request['nip'];
+        $user->email = $request['email'];
+        $user->level = $request['level'];
+        $user->status = $request['status'];
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Data user berhasil diupdate!');
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+        $user->password = Hash::make($user->nip);
+        $user->save();
+
+        return back()->with('success', 'Password user berhasil direset');
     }
 }

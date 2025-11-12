@@ -45,4 +45,27 @@ class ActivityController extends Controller
 
         return redirect()->route('activity.index')->with('success', 'Kegiatan SOP berhasil ditambahkan');
     }
+
+    public function edit($id)
+    {
+        $data = [
+            'title' => 'Edit Activity SOP',
+            'sop' => Sop::get(),
+            'activity' => Activity::find($id),
+            'menuAct' => 'active',
+        ];
+
+        return view('activity.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $activity = Activity::find($id);
+        $activity->sop_id = $request['sop_id'];
+        $activity->name = $request['name'];
+        $activity->status = $request['status'];
+        $activity->save();
+
+        return redirect()->route('activity.index')->with('success', 'Kegiatan SOP berhasil diupdate!');
+    }
 }

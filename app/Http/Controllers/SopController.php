@@ -42,4 +42,25 @@ class SopController extends Controller
 
         return redirect()->route('sop.index')->with('success', 'SOP berhasil ditambahkan');
     }
+
+    public function edit($id)
+    {
+        $data = [
+            'title' => 'Edit SOP',
+            'sop' => Sop::find($id),
+            'menuSop' => 'active',
+        ];
+
+        return view('sop.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $sop = Sop::find($id);
+        $sop->name = $request['name'];
+        $sop->status = $request['status'];
+        $sop->save();
+
+        return redirect()->route('sop.index')->with('success', 'Data SOP berhasil diupdate!');
+    }
 }
