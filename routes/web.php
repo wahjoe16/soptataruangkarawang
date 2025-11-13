@@ -53,6 +53,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/applications/store', [ApplicationController::class, 'store'])->name('applications.store');
+    Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
+    Route::put('/applications/{id}/update', [ApplicationController::class, 'update'])->name('applications.update');
 
     // view pemohonan baru oleh katim dan kabid
     Route::get('/applications-view', [ApplicationController::class, 'viewApplication'])->name('applications.view');

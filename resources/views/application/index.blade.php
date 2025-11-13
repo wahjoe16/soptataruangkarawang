@@ -40,6 +40,7 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Evaluator</th>
+                                    <th>Sisa Hari</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -50,16 +51,43 @@
                                         <td class="text-muted">{{ $value['name'] }}</td>
                                         <td class="text-muted">{{ $value['sop']['code'] }}</td>
                                         <td class="text-muted">{{ $value['name_applicant'] }}</td>
+
                                         @if ($value['user_id'] == null)
                                             <td><span class="badge bg-warning text-muted">Not Assign</span></td>
                                         @else
                                             <td>{{ $value['user']['name'] }}</td>
                                         @endif
 
+                                        <?php
+                                            $start = new DateTime();
+                                            $end = new DateTime($value['date_deadline']);
+                                            // $sisaWaktu = date_diff($start, $end);
+                                            $sisaWaktu = $start->diff($end);
+
+                                            $weekDay = 0;
+                                            $day = clone $start;
+
+                                            while($day <= $end) {
+                                                $thisDay = $day->format('N');
+                                                if ($thisDay >= 1 && $thisDay <=5) {
+                                                    $weekDay++;
+                                                }
+                                                $day->modify('+1 day');
+                                            }
+                                        ?> 
+
+                                        @if ($weekDay >= 8)
+                                            <td><span class="badge bg-success text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                        @elseif ($weekDay > 4)
+                                            <td><span class="badge bg-warning text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                        @elseif ($weekDay < 4)
+                                            <td><span class="badge bg-danger text-white">{{ $weekDay }}&nbsp;Hari</span></td>
+                                        @endif
+
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>&nbsp;
-                                            <a href="#" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
-                                            <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
+                                            {{-- <a href="#" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>&nbsp; --}}
+                                            <a href="{{ route('applications.edit', $value['id']) }}" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
+                                            {{-- <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -71,6 +99,7 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Evaluator</th>
+                                    <th>Sisa Hari</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>

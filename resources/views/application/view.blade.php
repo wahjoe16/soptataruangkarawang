@@ -26,9 +26,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div>
-                        <a href="{{ route('applications.create') }}" class="btn btn-success btn-sm"><i class="icon-plus"></i> Tambah Data</a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

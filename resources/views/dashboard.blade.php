@@ -8,6 +8,232 @@
 @section('content')
 
     @if (Auth::user()->level == 'Ketua Tim' || Auth::user()->level == 'Kepala Bidang')
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Distribusi Permohonan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-muted">Evaluator</th>
+                                        <th class="text-muted">SOP 1</th>
+                                        <th class="text-muted">SOP 2</th>
+                                        <th class="text-muted">SOP 3</th>
+                                        <th class="text-muted">SOP 4</th>
+                                        <th class="text-muted">SOP 5</th>
+                                        <th class="text-muted">SOP 6</th>
+                                        <th class="text-muted">SOP 7</th>
+                                        <th class="text-muted">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-muted">Ali Muhfid, S.Kom</td>
+                                        <td class="text-muted">{{ $sop1ev1 }}</td>
+                                        <td class="text-muted">{{ $sop2ev1 }}</td>
+                                        <td class="text-muted">{{ $sop3ev1 }}</td>
+                                        <td class="text-muted">{{ $sop4ev1 }}</td>
+                                        <td class="text-muted">{{ $sop5ev1 }}</td>
+                                        <td class="text-muted">{{ $sop6ev1 }}</td>
+                                        <td class="text-muted">{{ $sop7ev1 }}</td>
+                                        <?php
+                                            $deret = [$sop1ev1,$sop2ev1,$sop3ev1,$sop4ev1,$sop5ev1,$sop6ev1,$sop7ev1];
+                                            $hasil = array_sum($deret)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Cecep Angga Nurhamdani</td>
+                                        <td class="text-muted">{{ $sop1ev2 }}</td>
+                                        <td class="text-muted">{{ $sop2ev2 }}</td>
+                                        <td class="text-muted">{{ $sop3ev2 }}</td>
+                                        <td class="text-muted">{{ $sop4ev2 }}</td>
+                                        <td class="text-muted">{{ $sop5ev2 }}</td>
+                                        <td class="text-muted">{{ $sop6ev2 }}</td>
+                                        <td class="text-muted">{{ $sop7ev2 }}</td>
+                                        <?php
+                                            $deret2 = [$sop1ev2,$sop2ev2,$sop3ev2,$sop4ev2,$sop5ev2,$sop6ev2,$sop7ev2];
+                                            $hasil2 = array_sum($deret2)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Vindi Nugraha, ST</td>
+                                        <td class="text-muted">{{ $sop1ev3 }}</td>
+                                        <td class="text-muted">{{ $sop2ev3 }}</td>
+                                        <td class="text-muted">{{ $sop3ev3 }}</td>
+                                        <td class="text-muted">{{ $sop4ev3 }}</td>
+                                        <td class="text-muted">{{ $sop5ev3 }}</td>
+                                        <td class="text-muted">{{ $sop6ev3 }}</td>
+                                        <td class="text-muted">{{ $sop7ev3 }}</td>
+                                        <?php
+                                            $deret3 = [$sop1ev3,$sop2ev3,$sop3ev3,$sop4ev3,$sop5ev3,$sop6ev3,$sop7ev3];
+                                            $hasil3 = array_sum($deret3)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil3 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Depijay</td>
+                                        <td class="text-muted">{{ $sop1ev4 }}</td>
+                                        <td class="text-muted">{{ $sop2ev4 }}</td>
+                                        <td class="text-muted">{{ $sop3ev4 }}</td>
+                                        <td class="text-muted">{{ $sop4ev4 }}</td>
+                                        <td class="text-muted">{{ $sop5ev4 }}</td>
+                                        <td class="text-muted">{{ $sop6ev4 }}</td>
+                                        <td class="text-muted">{{ $sop7ev4 }}</td>
+                                        <?php
+                                            $deret4 = [$sop1ev4,$sop2ev4,$sop3ev4,$sop4ev4,$sop5ev4,$sop6ev4,$sop7ev4];
+                                            $hasil4 = array_sum($deret4)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil4 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Ade Ismawan</td>
+                                        <td class="text-muted">{{ $sop1ev5 }}</td>
+                                        <td class="text-muted">{{ $sop2ev5 }}</td>
+                                        <td class="text-muted">{{ $sop3ev5 }}</td>
+                                        <td class="text-muted">{{ $sop4ev5 }}</td>
+                                        <td class="text-muted">{{ $sop5ev5 }}</td>
+                                        <td class="text-muted">{{ $sop6ev5 }}</td>
+                                        <td class="text-muted">{{ $sop7ev5 }}</td>
+                                        <?php
+                                            $deret5 = [$sop1ev5,$sop2ev5,$sop3ev5,$sop4ev5,$sop5ev5,$sop6ev5,$sop7ev5];
+                                            $hasil5 = array_sum($deret5)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil5 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Rina Khoirina SNB, S.T.</td>
+                                        <td class="text-muted">{{ $sop1ev6 }}</td>
+                                        <td class="text-muted">{{ $sop2ev6 }}</td>
+                                        <td class="text-muted">{{ $sop3ev6 }}</td>
+                                        <td class="text-muted">{{ $sop4ev6 }}</td>
+                                        <td class="text-muted">{{ $sop5ev6 }}</td>
+                                        <td class="text-muted">{{ $sop6ev6 }}</td>
+                                        <td class="text-muted">{{ $sop7ev6 }}</td>
+                                        <?php
+                                            $deret6 = [$sop1ev6,$sop2ev6,$sop3ev6,$sop4ev6,$sop5ev6,$sop6ev6,$sop7ev6];
+                                            $hasil6 = array_sum($deret6)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil6 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Aruni Naufalia Akbar, S.T.</td>
+                                        <td class="text-muted">{{ $sop1ev7 }}</td>
+                                        <td class="text-muted">{{ $sop2ev7 }}</td>
+                                        <td class="text-muted">{{ $sop3ev7 }}</td>
+                                        <td class="text-muted">{{ $sop4ev7 }}</td>
+                                        <td class="text-muted">{{ $sop5ev7 }}</td>
+                                        <td class="text-muted">{{ $sop6ev7 }}</td>
+                                        <td class="text-muted">{{ $sop7ev7 }}</td>
+                                        <?php
+                                            $deret7 = [$sop1ev7,$sop2ev7,$sop3ev7,$sop4ev7,$sop5ev7,$sop6ev7,$sop7ev7];
+                                            $hasil7 = array_sum($deret7)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil7 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Heilia Nur Ruhenda, S.T., M.T.</td>
+                                        <td class="text-muted">{{ $sop1ev8 }}</td>
+                                        <td class="text-muted">{{ $sop2ev8 }}</td>
+                                        <td class="text-muted">{{ $sop3ev8 }}</td>
+                                        <td class="text-muted">{{ $sop4ev8 }}</td>
+                                        <td class="text-muted">{{ $sop5ev8 }}</td>
+                                        <td class="text-muted">{{ $sop6ev8 }}</td>
+                                        <td class="text-muted">{{ $sop7ev8 }}</td>
+                                        <?php
+                                            $deret8 = [$sop1ev8,$sop2ev8,$sop3ev8,$sop4ev8,$sop5ev8,$sop6ev8,$sop7ev8];
+                                            $hasil8 = array_sum($deret8)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil8 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Kingkin Hanif Robani H, S.Pd., M.P.W.K</td>
+                                        <td class="text-muted">{{ $sop1ev9 }}</td>
+                                        <td class="text-muted">{{ $sop2ev9 }}</td>
+                                        <td class="text-muted">{{ $sop3ev9 }}</td>
+                                        <td class="text-muted">{{ $sop4ev9 }}</td>
+                                        <td class="text-muted">{{ $sop5ev9 }}</td>
+                                        <td class="text-muted">{{ $sop6ev9 }}</td>
+                                        <td class="text-muted">{{ $sop7ev9 }}</td>
+                                        <?php
+                                            $deret9 = [$sop1ev9,$sop2ev9,$sop3ev9,$sop4ev9,$sop5ev9,$sop6ev9,$sop7ev9];
+                                            $hasil9 = array_sum($deret9)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil9 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Elsa Khairunisa, S.T.</td>
+                                        <td class="text-muted">{{ $sop1ev10 }}</td>
+                                        <td class="text-muted">{{ $sop2ev10 }}</td>
+                                        <td class="text-muted">{{ $sop3ev10 }}</td>
+                                        <td class="text-muted">{{ $sop4ev10 }}</td>
+                                        <td class="text-muted">{{ $sop5ev10 }}</td>
+                                        <td class="text-muted">{{ $sop6ev10 }}</td>
+                                        <td class="text-muted">{{ $sop7ev10 }}</td>
+                                        <?php
+                                            $deret10 = [$sop1ev10,$sop2ev10,$sop3ev10,$sop4ev10,$sop5ev10,$sop6ev10,$sop7ev10];
+                                            $hasil10 = array_sum($deret10)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil10 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Hikmah Windu Jati, S.T.</td>
+                                        <td class="text-muted">{{ $sop1ev11 }}</td>
+                                        <td class="text-muted">{{ $sop2ev11 }}</td>
+                                        <td class="text-muted">{{ $sop3ev11 }}</td>
+                                        <td class="text-muted">{{ $sop4ev11 }}</td>
+                                        <td class="text-muted">{{ $sop5ev11 }}</td>
+                                        <td class="text-muted">{{ $sop6ev11 }}</td>
+                                        <td class="text-muted">{{ $sop7ev11 }}</td>
+                                        <?php
+                                            $deret11 = [$sop1ev11,$sop2ev11,$sop3ev11,$sop4ev11,$sop5ev11,$sop6ev11,$sop7ev11];
+                                            $hasil11 = array_sum($deret11)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil11 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Nusrat Martha Utami, A.md.</td>
+                                        <td class="text-muted">{{ $sop1ev12 }}</td>
+                                        <td class="text-muted">{{ $sop2ev12 }}</td>
+                                        <td class="text-muted">{{ $sop3ev12 }}</td>
+                                        <td class="text-muted">{{ $sop4ev12 }}</td>
+                                        <td class="text-muted">{{ $sop5ev12 }}</td>
+                                        <td class="text-muted">{{ $sop6ev12 }}</td>
+                                        <td class="text-muted">{{ $sop7ev12 }}</td>
+                                        <?php
+                                            $deret12 = [$sop1ev12,$sop2ev12,$sop3ev12,$sop4ev12,$sop5ev12,$sop6ev12,$sop7ev12];
+                                            $hasil12 = array_sum($deret12)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil12 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Devirda J, S. P. W. K.</td>
+                                        <td class="text-muted">{{ $sop1ev13 }}</td>
+                                        <td class="text-muted">{{ $sop2ev13 }}</td>
+                                        <td class="text-muted">{{ $sop3ev13 }}</td>
+                                        <td class="text-muted">{{ $sop4ev13 }}</td>
+                                        <td class="text-muted">{{ $sop5ev13 }}</td>
+                                        <td class="text-muted">{{ $sop6ev13 }}</td>
+                                        <td class="text-muted">{{ $sop7ev13 }}</td>
+                                        <?php
+                                            $deret13 = [$sop1ev13,$sop2ev13,$sop3ev13,$sop4ev13,$sop5ev13,$sop6ev13,$sop7ev13];
+                                            $hasil13 = array_sum($deret13)
+                                        ?>
+                                        <td class="text-muted">{{ $hasil13 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -90,11 +316,12 @@
                 </div>
             </div>
         </div>
+
     @endif
     
 
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8">
             <div class="card">
                 <div class="card-header">
@@ -601,7 +828,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection
 

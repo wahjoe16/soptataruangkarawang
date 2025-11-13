@@ -74,6 +74,59 @@ class ApplicationController extends Controller
         return redirect()->route('applications.index')->with('success', 'Permohonan berhasil ditambahkan');
     }
 
+    public function edit($id)
+    {
+        $data = [
+            'menuApplications' => 'active',
+            'title' => 'Edit data permohonan',
+            'sop' => Sop::get(),
+            'app' => Application::find($id)
+        ];
+        return view('application.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'name_applicant' => 'required|string|max:255',
+            'sop_id' => 'required',
+            'name' => 'required|string|max:255',
+            'documents' => 'nullable|file',
+        ]);
+
+        // Simpan data permohonan baru
+        $application = Application::find($id);
+        $application->name = $request->input('name');
+        $application->name_applicant = $request->input('name_applicant');
+        $application->address_application = $request->input('address_application');
+        $application->sop_id = $request->input('sop_id');
+        $application->link_file = $request->input('link_file');
+
+        // date_application processing
+        if ($request->has('date_application')) {
+            $application->date_application = date('Y-m-d', strtotime($request->input('date_application')));
+        }
+
+        // date_deadline processing 14 weekdays after date_application
+        if ($request->has('date_application')) {
+            $date = strtotime($request->input('date_application'));
+            $weekdaysAdded = 0;
+            while ($weekdaysAdded < 14) {
+                $date = strtotime("+1 day", $date);
+                // Skip weekends
+                if (date('N', $date) < 6) {
+                    $weekdaysAdded++;
+                }
+            }
+            $application->date_deadline = date('Y-m-d', $date);
+        }
+        
+        $application->save();
+
+        return redirect()->route('applications.index')->with('success', 'Permohonan berhasil diupdate!');
+    }
+
     public function viewApplication()
     {
         $data = [
