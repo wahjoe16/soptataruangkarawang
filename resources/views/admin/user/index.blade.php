@@ -59,7 +59,7 @@
                                         <td>
                                             <a href="{{ route('users.view', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>&nbsp;
                                             <a href="{{ route('users.edit', $value['id']) }}" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
-                                            <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm confirmDelete" module="users" moduleid="{{ $value['id'] }}"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -88,4 +88,30 @@
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+
+    <script>
+        $('.confirmDelete').click(function(){
+            var module = $(this).attr('module');
+            var moduleid = $(this).attr('moduleid');
+
+            Swal.fire({
+                title: 'Anda Yakin?',
+                text: "Anda Akan Menghapus Data User!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    window.location.href = "/users/"+moduleid+"/delete";
+                }
+            })
+        })
+    </script>
 @endpush

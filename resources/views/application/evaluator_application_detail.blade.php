@@ -40,7 +40,7 @@
                                     <td class="text-muted">{{ $application['name_applicant'] }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Alamat Pemohon</th>
+                                    <th class="text-muted">Lokasi Rencana Kegiatan</th>
                                     <td class="text-muted">{{ $application['address_application'] }}</td>
                                 </tr>
                                 <tr>
@@ -88,6 +88,23 @@
             </div>
         </div>
     </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="btn-group">
+                <form id="finish-form-{{ $application['id'] }}" action="{{ route('applications.evaluator.finish', $application['id']) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="button" onclick="confirmFinish({{ $application['id'] }})" class="btn btn-primary btn-sm mr-3">Selesai</button>
+                </form>
+                
+                <form id="reject-form-{{ $application['id'] }}" action="{{ route('applications.evaluator.reject', $application['id']) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="button" onclick="confirmReject({{ $application['id'] }})" class="btn btn-danger btn-sm">Tolak Permohonan</button>
+                </form>
+            </div>
+        </div>
+    </div>
     
 
 @endsection
@@ -112,5 +129,42 @@
                 })
             })
         })
+    </script>
+
+    <script type="text/javascript">
+
+        function confirmFinish(id) {
+            Swal.fire({
+                title: 'Anda Yakin?',
+                text: "Status Permohonan Akan Selesai!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Selesaikan!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('finish-form-' + id).submit();
+                }
+            })
+        }
+
+        function confirmReject(id) {
+            Swal.fire({
+                title: 'Anda Yakin?',
+                text: "Status Permohonan Akan Dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Batalkan!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('reject-form-' + id).submit();
+                }
+            })
+        }
+
+        
     </script>
 @endpush

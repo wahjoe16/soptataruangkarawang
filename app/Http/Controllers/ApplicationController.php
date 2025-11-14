@@ -132,7 +132,7 @@ class ApplicationController extends Controller
         $data = [
             'menuApplicationsView' => 'active',
             'title' => 'Review Permohonan Baru',
-            'applications' => Application::whereNull('user_id')->with(['sop', 'user'])->get(),
+            'applications' => Application::whereNull('user_id')->with(['sop', 'user'])->orderBy('id', 'desc')->get(),
         ];
 
         return view('application.view', $data);
@@ -178,7 +178,7 @@ class ApplicationController extends Controller
 
     public function viewEvaluatorApplication()
     {
-        $application = Application::with('sop')->where('user_id', Auth::user()->id)->get();
+        $application = Application::with('sop')->where(['user_id' => Auth::user()->id, 'status' => 0])->get();
 
         $data = [
             'menuMyApplications' => 'active',
@@ -213,5 +213,23 @@ class ApplicationController extends Controller
         $progress->save();
 
         return redirect()->back()->with('success', 'Status progress permohonan berhasil diupdate');
+    }
+
+    public function finishStatusApplication($id)
+    {
+        $application = Application::find($id);
+        $application->status = 1;
+        $application->save();
+
+        return redirect()->route('evaluatorApplication.view')->with('success', 'Status Permohonan Telah Selesai!');
+    }
+
+    public function rejectStatusApplication($id)
+    {
+        $application = Application::find($id);
+        $application->status = 2;
+        $application->save();
+
+        return back()->with('success', 'Status Permohonan Dibatalkan!');
     }
 }

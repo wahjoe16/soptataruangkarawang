@@ -85,7 +85,6 @@
 
                                         <td class="text-muted">
                                             <a href="{{ route('applications.evaluator.detail', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
-                                            <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

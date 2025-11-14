@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
-
+    Route::get('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
     // manajemen SOP (Admin)
     Route::get('/sop', [SopController::class, 'index'])->name('sop.index');
     Route::get('/sop/create', [SopController::class, 'create'])->name('sop.create');
@@ -65,6 +65,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/evaluator-applications', [ApplicationController::class, 'viewEvaluatorApplication'])->name('evaluatorApplication.view');
     Route::get('/evaluator-applications/{id}/detail', [ApplicationController::class, 'evaluatorApplicationDetail'])->name('applications.evaluator.detail');
     Route::post('/evaluator-applications/update-status/{id}', [ApplicationController::class, 'updateStatusApplication'])->name('applications.evaluator.update');
+    Route::put('/evaluator-applications/finish/{id}', [ApplicationController::class, 'finishStatusApplication'])->name('applications.evaluator.finish');
+    Route::put('/evaluator-applications/reject/{id}', [ApplicationController::class, 'rejectStatusApplication'])->name('applications.evaluator.reject');
 });
 
 Route::middleware('auth')->group(function () {

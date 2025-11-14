@@ -92,4 +92,12 @@ class UserController extends Controller
 
         return back()->with('success', 'Password user berhasil direset');
     }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User berhasil dihapus!');
+    }
 }

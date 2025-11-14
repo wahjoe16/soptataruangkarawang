@@ -40,7 +40,7 @@
                                     <td class="text-muted">{{ $application['name_applicant'] }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Alamat Pemohon</th>
+                                    <th class="text-muted">Lokasi Rencana Kegiatan</th>
                                     <td class="text-muted">{{ $application['address_application'] }}</td>
                                 </tr>
                                 <tr>
