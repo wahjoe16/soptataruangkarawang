@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class)->where('status', 0);
     }
 
 }

@@ -58,34 +58,60 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
-                        Plot Evaluator
+                        Progress Permohonan
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('applications.assign', $application['id']) }}" method="post">
-                        @csrf
-                        <div class="mb-3">
-                            <select class="form-control input-rounded" id="user_id" name="user_id"  @error('user_id') is-invalid @enderror>
-                                <option value="">Pilih Evaluator</option>
-                                @foreach ($evaluators as $e)
-                                    <option value="{{ $e->id }}" {{ $application['user_id'] == $e->id ? 'selected' : '' }}>{{ $e->name }} <b>({{ $e['applications_count'] }})</b></option>
-                                @endforeach
-                            </select>
-                            @error('user_id')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
+                    <div class="widget-timeline">
+                        <ul class="timeline">
+                            @foreach ($appActivity as $key => $value)
+                                <li>
+                                    <div class="timeline-badge info"></div>
+                                    <a class="timeline-panel text-muted" href="#">
+                                        <form action="{{ route('applications.evaluator.update', $value['id']) }}" method="POST">
+                                            @csrf
+                                            <input type="checkbox" class="update-status" data-id="{{ $value['id'] }}" {{ $value['status'] ? 'checked' : '' }} disabled>
+                                            <h6 class="m-t-5">{{ $value['activity']['name'] }}</h6>
+                                        </form>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
 
 @endsection
+
+@push('bottom_scripts')
+    <script>
+        $(document).ready(function(){
+            $('.update-status').on('change', function(){
+                var actId = $(this).data('id');
+                var isChecked = $(this).is(':checked') ? 1 : null;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/evaluator-applications/update-status/' + actId,
+                    data: {status:isChecked, _token:'{{ csrf_token() }}'},
+                    success:function(resp){
+                        console.log('Status updated successfully:', response);
+                    },
+                    error:function(){
+                        console.error('Error updating status:', error);
+                    }
+                })
+            })
+        })
+    </script>
+
+@endpush

@@ -11,10 +11,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $applicationKatim = Application::with('sop', 'user')->where('user_id', '!=', null)->orderBy('id', 'desc')->get();
+        $applicationKatim = Application::with('sop', 'user')->where('status', 0)->whereNotNull('user_id')->orderBy('id', 'desc')->get();
         $evaluator = User::with('applications')->where([
             'level' => 'Evaluator'
         ])->get();
+        $sop = Sop::get();
+        // dd($sop);
         
         $userId1 = 6;
         $userId2 = 7;
@@ -346,6 +348,7 @@ class DashboardController extends Controller
             'title' => 'Beranda',
             'menuDashboard' => 'active',
             'applicationKatim' => $applicationKatim,
+            'sop' => $sop,
             'evaluator' => $evaluator,
             'sop1ev1' => $sop1ev1,
             'sop2ev1' => $sop2ev1,

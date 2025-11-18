@@ -55,11 +55,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/applications/store', [ApplicationController::class, 'store'])->name('applications.store');
     Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
     Route::put('/applications/{id}/update', [ApplicationController::class, 'update'])->name('applications.update');
+    Route::put('/applications/{id}/upload-archive', [ApplicationController::class, 'uploadArchive'])->name('applications.upload.archive');
 
     // view pemohonan baru oleh katim dan kabid
     Route::get('/applications-view', [ApplicationController::class, 'viewApplication'])->name('applications.view');
     Route::get('/review-applications/{id}', [ApplicationController::class, 'reviewApplication'])->name('applications.review');
     Route::post('/applications/{id}/assign', [ApplicationController::class, 'assign'])->name('applications.assign');
+    Route::get('/applications/{id}/detail', [ApplicationController::class, 'applicationDetail'])->name('applications.detail');
 
     // view permohonan yang telah di assign katim/kabid (Evaluator)
     Route::get('/evaluator-applications', [ApplicationController::class, 'viewEvaluatorApplication'])->name('evaluatorApplication.view');

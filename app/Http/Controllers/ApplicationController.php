@@ -127,6 +127,20 @@ class ApplicationController extends Controller
         return redirect()->route('applications.index')->with('success', 'Permohonan berhasil diupdate!');
     }
 
+    public function uploadArchive(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'link_archive' => 'max:255',
+        ]);
+
+        $application = Application::find($id);
+        $application->link_archive = $request->input('link_archive');
+        $application->save();
+        
+        return redirect()->route('applications.index')->with('success', 'Arsip berhasil diupload!');
+    }
+
     public function viewApplication()
     {
         $data = [
@@ -146,7 +160,7 @@ class ApplicationController extends Controller
             'menuApplicationsCheck' => 'active',
             'title' => 'Review Permohonan',
             'application' => $application,
-            'evaluators' => User::where('level', 'Evaluator')->get(),
+            'evaluators' => User::withCount('applications')->where('level', 'Evaluator')->get(),
             
         ];
 
@@ -174,6 +188,18 @@ class ApplicationController extends Controller
         }
 
         return redirect()->route('applications.view')->with('success', 'Permohonanberhasil ditugaskan ke Evaluator');
+    }
+
+    public function applicationDetail($id)
+    {
+        $data = [
+            'menuApplicationsView' => 'active',
+            'title' => 'Detail Permohonan',
+            'application' => Application::where('id', $id)->with(['sop', 'user'])->first(),
+            'appActivity' => ApplicationActivity::where('application_id', $id)->get(),
+        ];
+        
+        return view('application.application_detail', $data);
     }
 
     public function viewEvaluatorApplication()
@@ -230,6 +256,6 @@ class ApplicationController extends Controller
         $application->status = 2;
         $application->save();
 
-        return back()->with('success', 'Status Permohonan Dibatalkan!');
+        return redirect()->route('evaluatorApplication.view')->with('success', 'Status Permohonan Dibatalkan!');
     }
 }

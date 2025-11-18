@@ -81,6 +81,34 @@
             </div>
         </div>
     </div>
+    @if ($app['status'] == 1)
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card_title">Link Berkas Pengesahan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form action="{{ route('applications.upload.archive', $app['id']) }}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label class="text-muted">Link Berkas Pengesahan</label>
+                                        <input type="text" class="form-control input-rounded" name="link_archive" @error('link_archive') is-invalid @enderror value="{{ $app['link_archive'] }}">
+                                    </div>
+                                </div>
+                                <div class="form-row mt-4">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 @endsection
 

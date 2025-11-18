@@ -235,6 +235,31 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Label Keterangan SOP</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info alert-dismissible fade show">
+                            <div class="table-responsive">
+                                <table class="table table-responsive-sm">
+                                    <tbody>
+                                        @foreach ($sop as $s)
+                                            <tr>
+                                                <th class="text-muted">{{ $s['code'] }}</th>
+                                                <td class="text-muted">{{ $s['name'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
@@ -295,7 +320,7 @@
                                             @endif
 
                                             <td>
-                                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
+                                                <a href="{{ route('applications.detail', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -98,12 +98,15 @@
             rules: {
                 "name": {
                     required: true,
+                    maxlength: 255
                 },
                 "address_application": {
                     required: true,
+                    maxlength: 255
                 },
                 "name_applicant": {
                     required: true,
+                    maxlength: 255
                 },
                 "date_application": {
                     required: true,
@@ -114,17 +117,25 @@
                 "link_file": {
                     required: true,
                     url: true,
+                    maxlength: 255
+                },
+                "link_archive": {
+                    url: true,
+                    maxlength: 255
                 },
             },
             messages: {
                 "name": {
                     required: "Rencana Kegiatan wajib diisi",
+                    maxlength: "Rencana Kegiatan maksimal 255 karakter",
                 },
                 "address_application": {
                     required: "Lokasi Rencana Kegiatan wajib diisi",
+                    maxlength: "Lokasi Rencana Kegiatan maksimal 255 karakter",
                 },
                 "name_applicant": {
                     required: "Nama Pemohon wajib diisi",
+                    maxlength: "Nama Pemohon maksimal 255 karakter",
                 },
                 "date_application": {
                     required: "Tanggal Permohonan wajib diisi",
@@ -135,6 +146,11 @@
                 "link_file": {
                     required: "Link Berkas Kelengkapan wajib diisi",
                     url: "Format Link Berkas Kelengkapan tidak valid",
+                    maxlength: "Link Berkas Kelengkapan maksimal 255 karakter",
+                },
+                "link_archive": {
+                    url: "Format Link Arsip tidak valid",
+                    maxlength: "Link Arsip maksimal 255 karakter",
                 },
             },
             errorElement: 'span',
