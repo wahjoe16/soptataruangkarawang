@@ -48,8 +48,26 @@
                                     <td class="text-muted"><a href="{{ $application['link_file'] }}" target="_blank">{{ $application['link_file'] }}</a></td>
                                 </tr>
                                 <tr>
+                                    <th class="text-muted">Evaluator</th>
+                                    <td class="text-muted"><strong>{{ $application['user']['name'] }}</strong></td>
+                                </tr>
+                                <tr>
                                     <th class="text-muted">Tanggal Input Permohonan</th>
                                     <td class="text-muted">{{ date('d M Y', strtotime($application['date_application'])) }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Tanggal Deadline Permohonan</th>
+                                    <td class="text-muted">{{ date('d M Y', strtotime($application['date_deadline'])) }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Status</th>
+                                    @if ($application['status'] == 0)
+                                        <td class="text-muted"><span class="badge badge-success">On Progress</span></td>
+                                    @elseif ($application['status'] == 1)
+                                        <td class="text-muted"><span class="badge badge-info">Selesai</span></td>
+                                    @elseif ($application['status'] == 2)
+                                        <td class="text-muted"><span class="badge badge-danger">Ditolak</span></td> 
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>
@@ -77,6 +95,7 @@
                                         <form action="{{ route('applications.evaluator.update', $value['id']) }}" method="POST">
                                             @csrf
                                             <input type="checkbox" class="update-status" data-id="{{ $value['id'] }}" {{ $value['status'] ? 'checked' : '' }} disabled>
+                                            @if($value['status'] != null) <span><small>{{ date('d M Y', strtotime($value['updated_at'])) }}</small></span> @endif
                                             <h6 class="m-t-5">{{ $value['activity']['name'] }}</h6>
                                         </form>
                                     </a>

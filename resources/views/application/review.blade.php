@@ -51,6 +51,20 @@
                                     <th class="text-muted">Tanggal Input Permohonan</th>
                                     <td class="text-muted">{{ date('d M Y', strtotime($application['date_application'])) }}</td>
                                 </tr>
+                                <tr>
+                                    <th class="text-muted">Tanggal Deadline Permohonan</th>
+                                    <td class="text-muted">{{ date('d M Y', strtotime($application['date_deadline'])) }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Status</th>
+                                    @if ($application['status'] == 0)
+                                        <td class="text-muted"><span class="badge badge-success">On Progress</span></td>
+                                    @elseif ($application['status'] == 1)
+                                        <td class="text-muted"><span class="badge badge-info">Selesai</span></td>
+                                    @elseif ($application['status'] == 2)
+                                        <td class="text-muted"><span class="badge badge-danger">Ditolak</span></td> 
+                                    @endif
+                                </tr>
                             </tbody>
                         </table>
                     </div>

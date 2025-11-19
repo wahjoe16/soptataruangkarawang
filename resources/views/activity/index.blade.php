@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="display" style="min-width: 845px">
+                        <table class="display table-activity" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -41,24 +41,6 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($activity as $key => $value)
-                                    <tr>
-                                        <td class="text-muted">{{ $key+1 }}</td>
-                                        <td class="text-muted">{{ $value['sop']['code'] }}</td>
-                                        <td class="text-muted">{{ $value['name'] }}</td>
-                                        @if ($value['status'] == 1)
-                                            <td class="text-muted"><span class="badge badge-success">Aktif</span></td>
-                                        @else
-                                            <td class="text-muted"><span class="badge badge-danger">Non Aktif</span></td>
-                                        @endif
-                                        <td>
-                                            <a href="{{ route('activity.edit', $value['id']) }}" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>&nbsp;
-                                            <a href="#" class="btn btn-outline-danger btn-sm"><i class="icon-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
@@ -80,4 +62,24 @@
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+
+    <script>
+        let table;
+        
+        $(function() {
+            table = $('.table-activity').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('activity.data') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'code', name: 'code'},
+                    {data: 'name', name: 'name'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        })
+        
+    </script>
 @endpush

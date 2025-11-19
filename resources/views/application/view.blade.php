@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="display" style="min-width: 845px">
+                        <table class="display table-new-applications" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -37,28 +37,12 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Evaluator</th>
+                                    <th>Tanggal Permohonan</th>
+                                    <th>Tanggal Deadline</th>
+                                    <th>Sisa Waktu</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($applications as $key => $value)
-                                    <tr>
-                                        <td class="text-muted">{{ $key+1 }}</td>
-                                        <td class="text-muted">{{ $value['name'] }}</td>
-                                        <td class="text-muted">{{ $value['sop']['code'] }}</td>
-                                        <td class="text-muted">{{ $value['name_applicant'] }}</td>
-                                        @if ($value['user_id'] == null)
-                                            <td><span class="badge bg-warning text-muted">Not Assign</span></td>
-                                        @else
-                                            <td>{{ $value['user']['name'] }}</td>
-                                        @endif
-
-                                        <td>
-                                            <a href="{{ route('applications.review', $value['id']) }} " class="btn btn-outline-info btn-sm"><i class="icon-user"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
@@ -66,6 +50,9 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Evaluator</th>
+                                    <th>Tanggal Permohonan</th>
+                                    <th>Tanggal Deadline</th>
+                                    <th>Sisa Waktu</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -82,4 +69,27 @@
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+
+    <script>
+        let table;
+
+        $(function() {
+            table = $('.table-new-applications').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('applications.view.data') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'code', name: 'code'},
+                    {data: 'name_applicant', name: 'name_applicant'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'date_application', name: 'date_application'},
+                    {data: 'date_deadline', name: 'date_deadline'},
+                    {data: 'sisa_waktu', name: 'sisa_waktu'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
+    </script>
 @endpush

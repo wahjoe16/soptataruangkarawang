@@ -47,9 +47,7 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="{{ asset('/focus/images/logo.png') }}" alt="">
-                <img class="logo-compact" src="{{ asset('/focus/images/logo-text.png') }}" alt="">
-                <img class="brand-title" src="{{ asset('/focus/images/logo-text.png') }}" alt="">
+                <img class="brand-title" src="{{ asset('/focus/images/logo_pupr.jpg') }}" alt="">
             </a>
 
             <div class="nav-control">
@@ -116,6 +114,10 @@
     <!--**********************************
         Scripts
     ***********************************-->
+
+    {{-- Jquery --}}
+    <script src="{{ asset('/focus/js/jquery-3.7.1.min.js') }}"></script>    
+
     <!-- Required vendors -->
     <script src="{{ asset('/focus/vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('/focus/js/quixnav-init.js') }}"></script>

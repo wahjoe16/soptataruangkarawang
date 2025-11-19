@@ -31,19 +31,18 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="display" style="min-width: 845px">
+                        <table class="display table-user" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>NIP</th>
                                     <th>Jabatan</th>
                                     <th>Email</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {{-- <tbody>
                                 @foreach ($user as $key => $value)
                                     <tr>
                                         <td class="text-muted">{{ $key+1 }}</td>
@@ -63,12 +62,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
+                            </tbody> --}}
                             <tfoot>
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>NIP</th>
                                     <th>Jabatan</th>
                                     <th>Email</th>
                                     <th>Status</th>
@@ -87,7 +85,6 @@
 @push('bottom_scripts')
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
 
     <script>
         $('.confirmDelete').click(function(){
@@ -113,5 +110,26 @@
                 }
             })
         })
+    </script>
+
+    <script>
+        let table;
+        
+        $(function() {
+            table = $('.table-user').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('users.data') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'level', name: 'level'},
+                    {data: 'email', name: 'email'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        })
+        
     </script>
 @endpush

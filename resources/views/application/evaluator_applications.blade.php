@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="display" style="min-width: 845px">
+                        <table class="display table-evaluator-application" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -45,50 +45,6 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                               
-
-                                @foreach ($application as $key => $value)
-                                    <tr>
-                                        <td class="text-muted">{{ $key+1 }}</td>
-                                        <td class="text-muted">{{ $value['name'] }}</td>
-                                        <td class="text-muted">{{ $value['sop']['code'] }}</td>
-                                        <td class="text-muted">{{ $value['name_applicant'] }}</td>
-                                        <td class="text-muted">{{ date('d M Y', strtotime($value['date_application'])) }}</td>
-                                        <td class="text-muted">{{ date('d M Y', strtotime($value['date_deadline'])) }}</td>
-
-                                        <?php
-                                            $start = new DateTime();
-                                            $end = new DateTime($value['date_deadline']);
-                                            // $sisaWaktu = date_diff($start, $end);
-                                            $sisaWaktu = $start->diff($end);
-
-                                            $weekDay = 0;
-                                            $day = clone $start;
-
-                                            while($day <= $end) {
-                                                $thisDay = $day->format('N');
-                                                if ($thisDay >= 1 && $thisDay <=5) {
-                                                    $weekDay++;
-                                                }
-                                                $day->modify('+1 day');
-                                            }
-                                        ?> 
-
-                                        @if ($weekDay >= 8)
-                                            <td><span class="badge bg-success text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                        @elseif ($weekDay > 4)
-                                            <td><span class="badge bg-warning text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                        @elseif ($weekDay < 4)
-                                            <td><span class="badge bg-danger text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                        @endif
-
-                                        <td class="text-muted">
-                                            <a href="{{ route('applications.evaluator.detail', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
@@ -114,4 +70,26 @@
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+
+    <script>
+        let table;
+
+        $(document).ready(function() {
+            table = $('.table-evaluator-application').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('evaluator.applications.data') }}",
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'name', name: 'name' },
+                    { data: 'code', name: 'code' },
+                    { data: 'name_applicant', name: 'name_applicant' },
+                    { data: 'date_application', name: 'date_application' },
+                    { data: 'date_deadline', name: 'date_deadline' },
+                    { data: 'sisa_waktu', name: 'sisa_waktu' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
+            });
+        });
+    </script>
 @endpush

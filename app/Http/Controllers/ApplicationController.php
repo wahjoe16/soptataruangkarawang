@@ -146,7 +146,7 @@ class ApplicationController extends Controller
         $data = [
             'menuApplicationsView' => 'active',
             'title' => 'Review Permohonan Baru',
-            'applications' => Application::whereNull('user_id')->with(['sop', 'user'])->orderBy('id', 'desc')->get(),
+            'applications' => Application::whereNull('user_id')->with(['sop', 'user'])->get(),
         ];
 
         return view('application.view', $data);

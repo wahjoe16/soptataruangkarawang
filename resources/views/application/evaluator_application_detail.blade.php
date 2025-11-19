@@ -51,6 +51,10 @@
                                     <th class="text-muted">Tanggal Input Permohonan</th>
                                     <td class="text-muted">{{ date('d M Y', strtotime($application['date_application'])) }}</td>
                                 </tr>
+                                <tr>
+                                    <th class="text-muted">Tanggal Deadline Permohonan</th>
+                                    <td class="text-muted">{{ date('d M Y', strtotime($application['date_deadline'])) }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,22 @@ Route::get('/', fn () => redirect()->route('login'));
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Ajax Yajra Datatable Administrator
+    Route::get('/users/data', [AjaxController::class, 'userData'])->name('users.data');
+    Route::get('/sop/data', [AjaxController::class, 'sopData'])->name('sop.data');
+    Route::get('/activity/data', [AjaxController::class, 'activityData'])->name('activity.data');
+
+    // Ajax Yajra Datatable Front Office
+    Route::get('/applications/data', [AjaxController::class, 'applicationData'])->name('applications.data');
+
+    // Ajax Yajra Datatable Evaluator
+    Route::get('/evaluator-applications/data', [AjaxController::class, 'evaluatorApplicationData'])->name('evaluator.applications.data');
+
+    // Ajax Yajra Datatable Katim, Kabid
+    Route::get('/applications-active/data', [AjaxController::class, 'applicationActiveData'])->name('applications.active.data');
+    Route::get('/applications-view/data', [AjaxController::class, 'applicationViewData'])->name('applications.view.data');
+
     // manajemen user (Admin)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');

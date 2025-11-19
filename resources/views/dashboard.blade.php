@@ -269,7 +269,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display" style="min-width: 845px">
+                            <table class="display applications-table" style="min-width: 845px">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -280,51 +280,6 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($applicationKatim as $key => $value)
-                                        <tr>
-                                            <td class="text-muted">{{ $key+1 }}</td>
-                                            <td class="text-muted">{{ $value['name'] }}</td>
-                                            <td class="text-muted">{{ $value['sop']['code'] }}</td>
-
-                                            @if ($value['user_id'] == null)
-                                                <td class="text-muted"><span class="badge bg-warning text-muted">Not Assign</span></td>
-                                            @else
-                                                <td class="text-muted">{{ $value['user']['name'] }}</td>
-                                            @endif
-
-                                            <?php
-                                                $start = new DateTime();
-                                                $end = new DateTime($value['date_deadline']);
-                                                // $sisaWaktu = date_diff($start, $end);
-                                                $sisaWaktu = $start->diff($end);
-
-                                                $weekDay = 0;
-                                                $day = clone $start;
-
-                                                while($day <= $end) {
-                                                    $thisDay = $day->format('N');
-                                                    if ($thisDay >= 1 && $thisDay <=5) {
-                                                        $weekDay++;
-                                                    }
-                                                    $day->modify('+1 day');
-                                                }
-                                            ?> 
-
-                                            @if ($weekDay >= 8)
-                                                <td><span class="badge bg-success text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                            @elseif ($weekDay > 4)
-                                                <td><span class="badge bg-warning text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                            @elseif ($weekDay < 4)
-                                                <td><span class="badge bg-danger text-white">{{ $weekDay }}&nbsp;Hari</span></td>
-                                            @endif
-
-                                            <td>
-                                                <a href="{{ route('applications.detail', $value['id']) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
@@ -860,5 +815,24 @@
 @push('bottom_scripts')
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/focus/js/plugins-init/datatables.init.js') }}"></script>
+
+    <script>
+        let table;
+
+        $(function() {
+            table = $('.applications-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('applications.active.data') }}',
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'code', name: 'code'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'sisa_waktu', name: 'sisa_waktu'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
+    </script>
 @endpush
