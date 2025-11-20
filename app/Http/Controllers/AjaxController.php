@@ -36,10 +36,11 @@ class AjaxController extends Controller
                 }
             })
             ->addColumn('action', function($user){
+                $deleteUrl = route('users.delete', $user->id);
                 $btn = '
                             <a href="'.route('users.view', $user->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
                             <a href="'.route('users.edit', $user->id).'" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>
-                            <a href="javascript:void(0)" module="users" moduleid="{{ $user->id }}" class="btn btn-outline-danger btn-sm confirmDelete"><i class="icon-trash"></i></a>
+                            <a href="javascript:void(0)" data-url="'.$deleteUrl.'" data-id="'. $user->id .'" class="btn btn-outline-danger btn-sm confirmDelete"><i class="icon-trash"></i></a>
                         ';
                     
                 return $btn;

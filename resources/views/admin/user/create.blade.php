@@ -29,15 +29,11 @@
                         <form action="{{ route('users.store') }}" method="POST" class="form-valide">
                             @csrf
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label>Nama</label>
                                     <input type="text" class="form-control input-rounded" name="name" @error('name') is-invalid @enderror value="{{ old('name') }}">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>NIP</label>
-                                    <input type="text" class="form-control input-rounded" name="nip" @error('nip') is-invalid @enderror value="{{ old('nip') }}">
-                                </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label>Email</label>
                                     <input type="text" class="form-control input-rounded" name="email" @error('email') is-invalid @enderror value="{{ old('email') }}">
                                 </div>
@@ -75,9 +71,6 @@
                 "name": {
                     required: true,
                 },
-                "nip": {
-                    required: true,
-                },
                 "email": {
                     required: true,
                     email: true,
@@ -89,9 +82,6 @@
             messages: {
                 "name": {
                     required: "Nama tidak boleh kosong",
-                },
-                "nip": {
-                    required: "NIP tidak boleh kosong",
                 },
                 "email": {
                     required: "Email tidak boleh kosong",

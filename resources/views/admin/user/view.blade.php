@@ -80,10 +80,6 @@
                                     <td class="text-muted">{{ $user['name'] }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">NIP</th>
-                                    <td class="text-muted">{{ $user['nip'] }}</td>
-                                </tr>
-                                <tr>
                                     <th class="text-muted">Email</th>
                                     <td class="text-muted">{{ $user['email'] }}</td>
                                 </tr>

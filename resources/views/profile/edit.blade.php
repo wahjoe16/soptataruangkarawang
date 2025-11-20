@@ -47,12 +47,6 @@
                                             <p>Email</p>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-xl-4 col-sm-4 prf-col">
-                                        <div class="profile-call">
-                                            <h4 class="text-muted">(+1) 321-837-1030</h4>
-                                            <p>Phone No.</p>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -88,10 +82,6 @@
                                                 <div class="form-group col-12">
                                                     <label>Nama</label>
                                                     <input type="text" class="form-control input-rounded" name="name" @error('name') is-invalid @enderror value="{{ $user->name }}">
-                                                </div>
-                                                <div class="form-group col-12">
-                                                    <label>NIP</label>
-                                                    <input type="text" class="form-control input-rounded" name="nip" @error('nip') is-invalid @enderror value="{{ $user->nip }}">
                                                 </div>
                                                 <div class="form-group col-12">
                                                     <label>Email</label>
@@ -186,33 +176,3 @@
         });
     </script>
 @endpush
-
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout> --}}

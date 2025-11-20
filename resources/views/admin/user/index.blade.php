@@ -87,9 +87,11 @@
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 
     <script>
-        $('.confirmDelete').click(function(){
-            var module = $(this).attr('module');
-            var moduleid = $(this).attr('moduleid');
+        $(document).on('click', '.confirmDelete',function(e){
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            var deleteUrl = $(this).data('url');
 
             Swal.fire({
                 title: 'Anda Yakin?',
@@ -98,15 +100,39 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Ya, Hapus!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                    window.location.href = "/users/"+moduleid+"/delete";
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            _method: 'DELETE',
+                            id: id
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                'Dihapus!',
+                                'Data User Berhasil Dihapus.',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(xhr) {
+                            Swal.fire(
+                                'Gagal!',
+                                'Data User Gagal Dihapus.',
+                                'error'
+                            )
+                        }
+                    })
+                    // Swal.fire(
+                    //     'Deleted!',
+                    //     'Your file has been deleted.',
+                    //     'success'
+                    // )
+                    // window.location.href = "/users/"+moduleid+"/delete";
                 }
             })
         })

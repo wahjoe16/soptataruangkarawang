@@ -29,15 +29,11 @@
                     @csrf
                     @method('PUT')
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label>Nama</label>
                             <input type="text" class="form-control input-rounded" name="name" @error('name') is-invalid @enderror value="{{ $user['name'] }}">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>NIP</label>
-                            <input type="text" class="form-control input-rounded" name="nip" @error('nip') is-invalid @enderror value="{{ $user['nip'] }}">
-                        </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label>Email</label>
                             <input type="text" class="form-control input-rounded" name="email" @error('email') is-invalid @enderror value="{{ $user['email'] }}">
                         </div>

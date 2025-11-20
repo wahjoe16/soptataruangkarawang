@@ -33,7 +33,6 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'nip' => 'required|string|max:10',
             'level' => 'required',
         ]);
 
@@ -41,9 +40,8 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->nip = $request->input('nip');
         $user->level = $request->input('level');
-        $user->password = bcrypt($user->nip); // Set password default atau generate secara acak
+        $user->password = bcrypt('123456789'); // Set password default atau generate secara acak
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
@@ -75,7 +73,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->name = $request['name'];
-        $user->nip = $request['nip'];
         $user->email = $request['email'];
         $user->level = $request['level'];
         $user->status = $request['status'];
@@ -87,7 +84,7 @@ class UserController extends Controller
     public function resetPassword($id)
     {
         $user = User::find($id);
-        $user->password = Hash::make($user->nip);
+        $user->password = Hash::make('123456789');
         $user->save();
 
         return back()->with('success', 'Password user berhasil direset');

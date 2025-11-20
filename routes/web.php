@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
-    Route::get('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
+    Route::delete('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
     // manajemen SOP (Admin)
     Route::get('/sop', [SopController::class, 'index'])->name('sop.index');
     Route::get('/sop/create', [SopController::class, 'create'])->name('sop.create');

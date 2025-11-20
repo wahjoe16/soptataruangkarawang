@@ -32,11 +32,21 @@
                                 @csrf
                                 <div class="form-group first">
                                     <label for="username">Email</label>
-                                    <input type="text" name="email" class="form-control" placeholder="your-email@gmail.com" id="username">
+                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="your-email@gmail.com" id="username">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group last mb-3">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="Your Password" id="password">
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Your Password" id="password">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             
                                 <div class="d-flex mb-5 align-items-center">

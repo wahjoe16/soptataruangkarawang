@@ -49,7 +49,6 @@ class ProfileController extends Controller
 
         $user = Auth()->user();
         $user->name = $request['name'] ?? '' ;
-        $user->nip = $request['nip'] ?? '' ;
         $user->email = $request['email'] ?? '' ;
         $user->level = $request['level'] ?? '' ;
 

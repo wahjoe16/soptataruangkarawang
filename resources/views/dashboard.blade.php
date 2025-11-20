@@ -3,13 +3,19 @@
 @push('top_css')
     <!-- Datatable -->
     <link href="{{ asset('/focus/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{{ ('/focus/vendor/pickadate/themes/default.css') }}">
+    <link rel="stylesheet" href="{{ ('/focus/vendor/pickadate/themes/default.date.css') }}">
 @endpush
 
 @section('content')
 
+    <h3>Hallo, Selamat Datang <i>{{ Auth::user()->name }}</i></h3>
+
     @if (Auth::user()->level == 'Ketua Tim' || Auth::user()->level == 'Kepala Bidang')
 
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -297,6 +303,67 @@
             </div>
         </div>
 
+    @endif
+
+    @if (Auth::user()->level == 'Front Office')
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            Input Permohonan Baru
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form action="{{ route('applications.store') }}" method="POST" class="form-valide">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="text-muted">Rencana Kegiatan</label>
+                                        <input type="text" class="form-control input-rounded" name="name" @error('name') is-invalid @enderror value="{{ old('name') }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="text-muted">Lokasi Rencana Kegiatan</label>
+                                        <input type="text" class="form-control input-rounded" name="address_application" @error('address_application') is-invalid @enderror value="{{ old('address_application') }}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="text-muted">Nama Pemohon</label>
+                                        <input type="text" class="form-control input-rounded" name="name_applicant" @error('name_applicant') is-invalid @enderror value="{{ old('name_applicant') }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="text-muted">Tanggal Permohonan</label>
+                                        <input type="text" class="datepicker-default form-control input-rounded" name="date_application" id="datepicker" @error('date_application') is-invalid @enderror value="{{ old('date_application') }}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label class="text-muted">SOP</label>
+                                        <select class="form-control input-rounded" name="sop_id"  @error('sop_id') is-invalid @enderror>
+                                            <option value="">-- Pilih SOP --</option>
+                                            @foreach ($sop as $value)
+                                                <option value="{{ $value['id'] }}" {{ old('sop_id') == $value['id'] ? 'selected' : '' }}>{{ $value['code'] }} - {{ $value['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label class="text-muted">Link Berkas Kelengkapan</label>
+                                        <input type="text" class="form-control input-rounded" name="link_file" @error('link_file') is-invalid @enderror value="{{ old('link_file') }}">
+                                    </div>
+                                </div>
+                                <div class="form-row mt-4">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
     
 
@@ -815,6 +882,14 @@
 @push('bottom_scripts')
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+
+    <!-- pickdate -->
+    <script src="{{ ('/focus/vendor/pickadate/picker.js') }}"></script>
+    <script src="{{ ('/focus/vendor/pickadate/picker.time.js') }}"></script>
+    <script src="{{ ('/focus/vendor/pickadate/picker.date.js') }}"></script>
+
+    <!-- Pickdate -->
+    <script src="{{ ('/focus/js/plugins-init/pickadate-init.js') }}"></script>
 
     <script>
         let table;
