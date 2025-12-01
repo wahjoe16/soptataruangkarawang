@@ -21,7 +21,7 @@
     <body>
 
         <div class="d-lg-flex half">
-            <div class="bg order-1 order-md-2" style="background-image: url('/login_page/images/alun2.png');"></div>
+            <div class="bg order-1 order-md-2" style="background-image: url('/login_page/images/puprkabkarawang.jpg');"></div>
             <div class="contents order-2 order-md-1">
                 <div class="container">
                     <div class="row align-items-center justify-content-center">
@@ -32,7 +32,7 @@
                                 @csrf
                                 <div class="form-group first">
                                     <label for="username">Email</label>
-                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="your-email@gmail.com" id="username">
+                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="email-anda@gmail.com" id="username">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group last mb-3">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Your Password" id="password">
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password Anda" id="password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

@@ -48,4 +48,9 @@ class User extends Authenticatable
         return $this->hasMany(Application::class)->where('status', 0);
     }
 
+    public function allApplications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
 }

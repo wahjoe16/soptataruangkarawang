@@ -38,11 +38,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Ajax Yajra Datatable Evaluator
     Route::get('/evaluator-applications/data', [AjaxController::class, 'evaluatorApplicationData'])->name('evaluator.applications.data');
+    Route::get('/history-evaluator-applications/{id}/data', [AjaxController::class, 'historyEvaluatorApplicationData'])->name('history.evaluator.applications.data');
+    Route::get('/history-evaluator-profile-applications/data', [AjaxController::class, 'historyEvaluatorProfileApplicationData'])->name('history.evaluator.profile.applications.data');
 
     // Ajax Yajra Datatable Katim, Kabid
     Route::get('/applications-active/data', [AjaxController::class, 'applicationActiveData'])->name('applications.active.data');
     Route::get('/applications-view/data', [AjaxController::class, 'applicationViewData'])->name('applications.view.data');
-
+    Route::get('/history-applications/data', [AjaxController::class, 'historyApplicationData'])->name('history.applications.data');
+    Route::get('/view-evaluator/{id}/data', [AjaxController::class, 'viewEvaluatorData'])->name('view.evaluator.data');
+    
     // manajemen user (Admin)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -74,11 +78,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/applications/{id}/update', [ApplicationController::class, 'update'])->name('applications.update');
     Route::put('/applications/{id}/upload-archive', [ApplicationController::class, 'uploadArchive'])->name('applications.upload.archive');
 
-    // view pemohonan baru oleh katim dan kabid
+    // permohonan di dashboard katim dan kabid
     Route::get('/applications-view', [ApplicationController::class, 'viewApplication'])->name('applications.view');
     Route::get('/review-applications/{id}', [ApplicationController::class, 'reviewApplication'])->name('applications.review');
     Route::post('/applications/{id}/assign', [ApplicationController::class, 'assign'])->name('applications.assign');
     Route::get('/applications/{id}/detail', [ApplicationController::class, 'applicationDetail'])->name('applications.detail');
+    Route::get('/view-evaluator/{id}', [ApplicationController::class, 'viewEvaluator'])->name('applications.view.evaluator');
 
     // view permohonan yang telah di assign katim/kabid (Evaluator)
     Route::get('/evaluator-applications', [ApplicationController::class, 'viewEvaluatorApplication'])->name('evaluatorApplication.view');
@@ -86,6 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/evaluator-applications/update-status/{id}', [ApplicationController::class, 'updateStatusApplication'])->name('applications.evaluator.update');
     Route::put('/evaluator-applications/finish/{id}', [ApplicationController::class, 'finishStatusApplication'])->name('applications.evaluator.finish');
     Route::put('/evaluator-applications/reject/{id}', [ApplicationController::class, 'rejectStatusApplication'])->name('applications.evaluator.reject');
+    Route::get('/history-applications/{id}', [ApplicationController::class, 'historyApplication'])->name('history.applications');
 });
 
 Route::middleware('auth')->group(function () {

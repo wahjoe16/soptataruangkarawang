@@ -30,9 +30,9 @@ class AjaxController extends Controller
             })
             ->addColumn('status', function($user){
                 if ($user->status == 1) {
-                    return '<span class="text-muted badge bg-success">Aktif</span>';
+                    return '<p style="text-align:center;"><span class="text-muted badge bg-success">Aktif</span></p>';
                 } elseif ($user->status == 0) {
-                    return '<span class="text-muted badge bg-danger">Non Aktif</span>';
+                    return '<p style="text-align:center;"><span class="text-muted badge bg-danger">Non Aktif</span></p>';
                 }
             })
             ->addColumn('action', function($user){
@@ -212,7 +212,7 @@ class AjaxController extends Controller
 
     public function applicationViewData()
     {
-        $applicationView = Application::with('sop', 'user')->whereNull('user_id')->orderBy('id', 'desc')->get();
+        $applicationView = Application::with('sop', 'user')->whereNull('user_id')->get();
 
         return datatables()->of($applicationView)
             ->addIndexColumn()
@@ -261,7 +261,7 @@ class AjaxController extends Controller
             })
             ->addColumn('action', function($applicationView){
                 $btn = '
-                            <a href="'.route('applications.review', $applicationView->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
+                            <a href="'.route('applications.review', $applicationView->id).'" class="btn btn-outline-info btn-sm"><i class="icon-user"></i>&nbsp;</a>
                        ';
                 return $btn;
             })
@@ -323,4 +323,161 @@ class AjaxController extends Controller
             ->make(true);
 
     }
+
+    public function historyApplicationData()
+    {
+        $historyApplication = Application::with('sop', 'user')->where('status', 1)->orWhere('status', 2)->orderBy('id', 'desc')->get();
+
+        return datatables()->of($historyApplication)
+            ->addIndexColumn()
+            ->addColumn('name', function($historyApplication){
+                return '<p class="text-muted">'.$historyApplication->name.'</p>';
+            })
+            ->addColumn('code', function($historyApplication){
+                return '<p class="text-muted" title="'.$historyApplication->sop->name.'">'.$historyApplication->sop->code.'</p>';
+            })
+            ->addColumn('name_applicant', function($historyApplication){
+                return '<p class="text-muted">'.$historyApplication->name_applicant.'</p>';
+            })
+            ->addColumn('user_id', function($historyApplication){
+                return '<p class="text-muted">'.$historyApplication->user->name.'</p>';
+            })
+            ->addColumn('status', function($historyApplication){
+                if ($historyApplication->status == 1) {
+                    return '<span class="badge bg-info text-white">Selesai</span>';
+                } else {
+                    return '<span class="badge bg-danger text-white">Ditolak / Dibatalkan</span>';
+                }
+            })
+            ->addColumn('action', function($historyApplication){
+                $btn = '
+                            <a href="'.route('applications.detail', $historyApplication->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
+                       ';
+                return $btn;
+            })
+            ->rawColumns(['name', 'code', 'name_applicant', 'user_id', 'status', 'action'])
+            ->make(true);
+    }
+
+    public function historyEvaluatorApplicationData($id)
+    {
+        $historyEvaluatorApplication = Application::with('sop')->whereNot('status', 0)->where('sop_id', $id)->where('user_id', Auth::user()->id)->get();
+
+        return datatables()->of($historyEvaluatorApplication)
+            ->addIndexColumn()
+            ->addColumn('name', function($historyEvaluatorApplication){
+                return '<p class="text-muted">'.$historyEvaluatorApplication->name.'</p>';
+            })
+            ->addColumn('address_application', function($historyEvaluatorApplication){
+                return '<p class="text-muted">'.$historyEvaluatorApplication->address_application.'</p>';
+            })
+            ->addColumn('sop.code', function($historyEvaluatorApplication){
+                return '<p class="text-muted" title="'.$historyEvaluatorApplication->sop->name.'">'.$historyEvaluatorApplication->sop->code.'</p>';
+            })
+            ->addColumn('name_applicant', function($historyEvaluatorApplication){
+                return '<p class="text-muted">'.$historyEvaluatorApplication->name_applicant.'</p>';
+            })
+            ->addColumn('date_application', function($historyEvaluatorApplication){ 
+                return '<p class="text-muted">'.date('d M Y', strtotime($historyEvaluatorApplication->date_application)).'</p>';
+            })
+            ->addColumn('status', function($historyEvaluatorApplication){
+                if ($historyEvaluatorApplication->status == 1) {
+                    return '<span class="badge bg-info text-white">Selesai</span>';
+                } else {
+                    return '<span class="badge bg-danger text-white">Ditolak / Dibatalkan</span>';
+                }
+            })
+            ->rawColumns(['name', 'sop.code', 'address_application' , 'name_applicant', 'date_application', 'status'])
+            ->make(true);
+    }
+
+    public function historyEvaluatorProfileApplicationData()
+    {
+        $applications = Application::with('sop')->whereNot('status', 0)->where('user_id', Auth::user()->id)->get();
+
+        return datatables()->of($applications)
+            ->addIndexColumn()
+            ->addColumn('name', function($applications){
+                return '<p class="text-muted">'.$applications->name.'</p>';
+            })
+            ->addColumn('address_application', function($applications){
+                return '<p class="text-muted">'.$applications->address_application.'</p>';
+            })
+            ->addColumn('sop.code', function($applications){
+                return '<p class="text-muted" title="'.$applications->sop->name.'">'.$applications->sop->code.'</p>';
+            })
+            ->addColumn('name_applicant', function($applications){
+                return '<p class="text-muted">'.$applications->name_applicant.'</p>';
+            })
+            ->addColumn('date_application', function($applications){ 
+                return '<p class="text-muted">'.date('d M Y', strtotime($applications->date_application)).'</p>';
+            })
+            ->addColumn('status', function($applications){
+                if ($applications->status == 1) {
+                    return '<span class="badge bg-info text-white">Selesai</span>';
+                } else {
+                    return '<span class="badge bg-danger text-white">Ditolak / Dibatalkan</span>';
+                }
+            })
+            ->rawColumns(['name', 'sop.code', 'address_application' , 'name_applicant', 'date_application', 'status'])
+            ->make(true);
+    }
+
+    public function viewEvaluatorData($id)
+    {
+        $user = User::where('name', $id)->first();
+
+        $evaluatorApplication = $user->applications()->with('sop')->get();
+
+        return datatables()->of($evaluatorApplication)
+            ->addIndexColumn()
+            ->addColumn('name', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->name.'</p>';
+            })
+            ->addColumn('code', function($evaluatorApplication){
+                return '<p class="text-muted" title="'.$evaluatorApplication->sop->name.'">'.$evaluatorApplication->sop->code.'</p>';
+            })
+            ->addColumn('name_applicant', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->name_applicant.'</p>';
+            })
+            ->addColumn('address_application', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->address_application.'</p>';
+            })
+            ->addColumn('date_application', function($evaluatorApplication){
+                return '<p class="text-muted">'.date('d M Y', strtotime($evaluatorApplication->date_application)).'</p>';
+            })
+            ->addColumn('date_deadline', function($evaluatorApplication){
+                return '<p class="text-muted">'.date('d M Y', strtotime($evaluatorApplication->date_deadline)).'</p>';
+            })
+            ->addColumn('sisa_waktu', function($evaluatorApplication){
+                $start = new DateTime();
+                $end = new DateTime($evaluatorApplication['date_deadline']);
+                // $sisaWaktu = date_diff($start, $end);
+                $sisaWaktu = $start->diff($end);
+
+                $weekDay = 0;
+                $day = clone $start;
+
+                while($day <= $end) {
+                    $thisDay = $day->format('N');
+                    if ($thisDay >= 1 && $thisDay <=5) {
+                        $weekDay++;
+                    }
+                    $day->modify('+1 day');
+                }
+
+                if ($weekDay >= 8) {
+                    return '<span class="badge bg-success text-white">'.$weekDay.'&nbsp;Hari</span>';
+                } elseif ($weekDay > 4) {
+                    return '<span class="badge bg-warning text-white">'.$weekDay.'&nbsp;Hari</span>';
+                } else {
+                    return '<span class="badge bg-danger text-white">'.$weekDay.'&nbsp;Hari</span>';
+                }
+                
+            })
+            ->rawColumns(['name', 'code', 'name_applicant', 'address_application', 'date_application', 'date_deadline', 'sisa_waktu'])
+            ->make(true);
+
+    }
+
 }

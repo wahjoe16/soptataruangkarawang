@@ -40,7 +40,7 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Tanggal Permohonan</th>
-                                    <th>Tanggal Deadline</th>
+                                    <th>Target Selesai</th>
                                     <th>Sisa Waktu</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -52,7 +52,7 @@
                                     <th>Kode SOP</th>
                                     <th>Pemohon</th>
                                     <th>Tanggal Permohonan</th>
-                                    <th>Tanggal Deadline</th>
+                                    <th>Target Selesai</th>
                                     <th>Sisa Waktu</th>
                                     <th>Aksi</th>
                                 </tr>

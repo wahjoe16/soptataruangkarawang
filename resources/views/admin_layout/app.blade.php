@@ -8,9 +8,9 @@
     <title>Dinas Tata Ruang Kab. Karawang | {{ $title }} </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/focus/images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ asset('/focus/vendor/owl-carousel/css/owl.carousel.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('/focus/vendor/owl-carousel/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/focus/vendor/owl-carousel/css/owl.theme.default.min.css') }}">
-    <link href="{{ asset('/focus/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/focus/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('/focus/css/style.css') }}" rel="stylesheet">
 
     {{-- MDI icons --}}
@@ -125,26 +125,26 @@
 
 
     <!-- Vectormap -->
-    <script src="{{ asset('/focus/vendor/raphael/raphael.min.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/morris/morris.min.js') }}"></script>
+    {{-- <script src="{{ asset('/focus/vendor/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/morris/morris.min.js') }}"></script> --}}
 
-
-    <script src="{{ asset('/focus/vendor/circle-progress/circle-progress.min.js') }}"></script>
+    
+    {{-- <script src="{{ asset('/focus/vendor/circle-progress/circle-progress.min.js') }}"></script>
     <script src="{{ asset('/focus/vendor/chart.js/Chart.bundle.min.js') }}"></script>
 
-    <script src="{{ asset('/focus/vendor/gaugeJS/dist/gauge.min.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/gaugeJS/dist/gauge.min.js') }}"></script> --}}
 
     <!--  flot-chart js -->
-    <script src="{{ asset('/focus/vendor/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/flot/jquery.flot.resize.js') }}"></script>
+    {{-- <script src="{{ asset('/focus/vendor/flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/flot/jquery.flot.resize.js') }}"></script> --}}
 
     <!-- Owl Carousel -->
-    <script src="{{ asset('/focus/vendor/owl-carousel/js/owl.carousel.min.js') }}"></script>
+    {{-- <script src="{{ asset('/focus/vendor/owl-carousel/js/owl.carousel.min.js') }}"></script> --}}
 
     <!-- Counter Up -->
-    <script src="{{ asset('/focus/vendor/jqvmap/js/jquery.vmap.min.js') }}"></script>
+    {{-- <script src="{{ asset('/focus/vendor/jqvmap/js/jquery.vmap.min.js') }}"></script>
     <script src="{{ asset('/focus/vendor/jqvmap/js/jquery.vmap.usa.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script> --}}
 
 
     <script src="{{ asset('/focus/js/dashboard/dashboard-1.js') }}"></script>

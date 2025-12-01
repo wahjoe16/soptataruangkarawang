@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $applications = Application::with('sop')->whereNot('status', 0)->where('user_id', Auth::user()->id)->get();
+        
         $data = [
             'user' => $request->user(),
             'title' => 'Profile User',
+            'applications' => $applications,
         ];
 
         return view('profile.edit', $data);

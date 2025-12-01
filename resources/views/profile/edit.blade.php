@@ -1,5 +1,10 @@
 @extends('admin_layout.app')
 
+@push('top_css')
+    <!-- Datatable -->
+    <link href="{{ asset('/focus/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 
     <div class="row page-titles mx-0">
@@ -31,7 +36,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="profile-info">
+                    <div class="profile-info ml-5">
                         <div class="row justify-content-center">
                             <div class="col-xl-8">
                                 <div class="row">
@@ -89,7 +94,7 @@
                                                 </div>
                                                 <div class="form-group col-12">
                                                     <label>Jabatan</label>
-                                                    <input type="text" class="form-control input-rounded" name="level" @error('level') is-invalid @enderror value="{{ $user->level }}">
+                                                    <input type="text" class="form-control input-rounded" name="level" @error('level') is-invalid @enderror value="{{ $user->level }}" disabled>
                                                 </div>
                                                 <div class="form-group col-12">
                                                     <label>Foto</label>
@@ -125,9 +130,29 @@
                                     </div>
                                 </div>
                                 @if (Auth::user()->level == "Evaluator")
-                                    <div id="history" class="tab-pane fade">
-
+                                <div id="history" class="tab-pane fade">
+                                    <div class="my-post-content pt-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-profile-history">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-muted">No</th>
+                                                                <th class="text-muted">Rencana kegiatan</th>
+                                                                <th class="text-muted">SOP</th>
+                                                                <th class="text-muted">Nama Pemohon</th>
+                                                                <th class="text-muted">Lokasi Rencana Kegiatan</th>
+                                                                <th class="text-muted">Tanggal Permohonan</th>
+                                                                <th class="text-muted">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -140,6 +165,8 @@
 @endsection
 
 @push('bottom_scripts')
+    <!-- Datatable -->
+    <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/focus/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script>
         jQuery(".form-valide").validate({
@@ -173,6 +200,27 @@
             unhighlight: function(element, errorClass, validClass) {
                 jQuery(element).removeClass('is-invalid');
             }
+        });
+    </script>
+    <script>
+        let table;
+        $(document).ready(function() {
+            table = $('.table-profile-history').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('history.evaluator.profile.applications.data') }}",
+                },
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'name', name: 'name' },
+                    { data: 'sop.code', name: 'sop.code' },
+                    { data: 'name_applicant', name: 'name_applicant' },
+                    { data: 'address_application', name: 'address_application' },
+                    { data: 'date_application', name: 'date_application' },
+                    { data: 'status', name: 'status' },
+                ],
+            });
         });
     </script>
 @endpush

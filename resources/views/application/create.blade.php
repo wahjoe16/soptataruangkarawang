@@ -117,7 +117,6 @@
                 "link_file": {
                     required: true,
                     url: true,
-                    maxlength: 255
                 },
                 "link_archive": {
                     url: true,
@@ -146,7 +145,6 @@
                 "link_file": {
                     required: "Link Berkas Kelengkapan wajib diisi",
                     url: "Format Link Berkas Kelengkapan tidak valid",
-                    maxlength: "Link Berkas Kelengkapan maksimal 255 karakter",
                 },
                 "link_archive": {
                     url: "Format Link Arsip tidak valid",

@@ -71,7 +71,7 @@ class ApplicationController extends Controller
         
         $application->save();
 
-        return redirect()->route('applications.index')->with('success', 'Permohonan berhasil ditambahkan');
+        return redirect()->route('applications.index')->with('success', 'Permohonan Berhasil Ditambahkan');
     }
 
     public function edit($id)
@@ -124,7 +124,7 @@ class ApplicationController extends Controller
         
         $application->save();
 
-        return redirect()->route('applications.index')->with('success', 'Permohonan berhasil diupdate!');
+        return redirect()->route('applications.index')->with('success', 'Permohonan Berhasil Diupdate!');
     }
 
     public function uploadArchive(Request $request, $id)
@@ -138,7 +138,7 @@ class ApplicationController extends Controller
         $application->link_archive = $request->input('link_archive');
         $application->save();
         
-        return redirect()->route('applications.index')->with('success', 'Arsip berhasil diupload!');
+        return redirect()->route('applications.index')->with('success', 'Arsip Berhasil Diupload!');
     }
 
     public function viewApplication()
@@ -160,7 +160,7 @@ class ApplicationController extends Controller
             'menuApplicationsCheck' => 'active',
             'title' => 'Review Permohonan',
             'application' => $application,
-            'evaluators' => User::withCount('applications')->where('level', 'Evaluator')->get(),
+            'evaluators' => User::withCount('applications')->where('level', 'Evaluator')->where('status', 1)->get(),
             
         ];
 
@@ -187,7 +187,7 @@ class ApplicationController extends Controller
             $appActivity->save();
         }
 
-        return redirect()->route('applications.view')->with('success', 'Permohonanberhasil ditugaskan ke Evaluator');
+        return redirect()->route('applications.view')->with('success', 'Permohonan Berhasil Ditugaskan ke Evaluator');
     }
 
     public function applicationDetail($id)
@@ -200,6 +200,22 @@ class ApplicationController extends Controller
         ];
         
         return view('application.application_detail', $data);
+    }
+
+    public function viewEvaluator($name)
+    {
+        $evaluatorApplication = User::where('name', $name)->with(['applications'])->first();
+        // dd($evaluatorApplication);
+        $data = [
+            'menuApplicationsView' => 'active',
+            'title' => 'Detail Evaluator',
+            'evaluatorApplication' => $evaluatorApplication
+            
+        ];
+
+        
+        
+        return view('application.view_evaluator', $data);
     }
 
     public function viewEvaluatorApplication()
@@ -238,7 +254,7 @@ class ApplicationController extends Controller
         $progress->status = $request->input('status');
         $progress->save();
 
-        return redirect()->back()->with('success', 'Status progress permohonan berhasil diupdate');
+        return redirect()->back()->with('success', 'Status Progress Permohonan Berhasil Diupdate');
     }
 
     public function finishStatusApplication($id)
@@ -257,5 +273,20 @@ class ApplicationController extends Controller
         $application->save();
 
         return redirect()->route('evaluatorApplication.view')->with('success', 'Status Permohonan Dibatalkan!');
+    }
+
+    public function historyApplication($id)
+    {
+        $applications = Application::with('sop')->whereNot('status', 0)->where('sop_id', $id)->where('user_id', Auth::user()->id)->get();
+
+        // $applications = Application::where('sop_id', $id)->where('user_id', Auth::user()->id)->with(['sop', 'user'])->get();
+        // dd($application);
+        $data = [
+            'menuHistoryApplications' => 'active',
+            'title' => 'Riwayat Permohonan',
+            'applications' => $applications,
+        ];
+
+        return view('application.history_applications_evaluator', $data);
     }
 }

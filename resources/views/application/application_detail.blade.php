@@ -56,7 +56,7 @@
                                     <td class="text-muted">{{ date('d M Y', strtotime($application['date_application'])) }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Tanggal Deadline Permohonan</th>
+                                    <th class="text-muted">Target Selesai Permohonan</th>
                                     <td class="text-muted">{{ date('d M Y', strtotime($application['date_deadline'])) }}</td>
                                 </tr>
                                 <tr>
