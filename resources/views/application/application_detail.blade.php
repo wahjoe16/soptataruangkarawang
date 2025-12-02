@@ -69,6 +69,10 @@
                                         <td class="text-muted"><span class="badge badge-danger">Ditolak</span></td> 
                                     @endif
                                 </tr>
+                                @if ($application['status'] == 1)
+                                    <th class="text-muted">Arsip Pengesahan</th>
+                                    <td class="text-muted"><strong><a href="{{ asset('archives/' . $application->link_archive) }}" target="_blank">{{ $application->link_archive }}</a></strong></td>
+                                @endif
                             </tbody>
                         </table>
                     </div>

@@ -86,17 +86,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card_title">Link Berkas Pengesahan</h5>
+                        <h5 class="card_title">Arsip Pengesahan</h5>
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            <form action="{{ route('applications.upload.archive', $app['id']) }}" method="post">
+                            <form action="{{ route('applications.upload.archive', $app['id']) }}" method="post" enctype="multipart/form-data" class="form-valide-archive">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-row">
                                     <div class="form-group col-12">
-                                        <label class="text-muted">Link Berkas Pengesahan</label>
-                                        <input type="text" class="form-control input-rounded" name="link_archive" @error('link_archive') is-invalid @enderror value="{{ $app['link_archive'] }}">
+                                        <label class="text-muted">Upload Arsip Pengesahan <small class="text-danger">(maksimum size: 1MB)</small></label>
+                                        <input type="file" class="form-control input-rounded" name="link_archive" @error('link_archive') is-invalid @enderror value="{{ $app['link_archive'] }}">
+                                        @if ($app->link_archive != null)
+                                            <small class="form-text text-muted">Berkas arsip saat ini: <a href="{{ asset('archives/' . $app->link_archive) }}" target="_blank">{{ $app->link_archive }}</a></small>
+                                            
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-row mt-4">
@@ -144,6 +148,11 @@
                     required: true,
                     url: true,
                 },
+                "link_archive": {
+                    required: false,
+                    extension: "pdf|doc|docx|xls|xlsx|jpg|jpeg|png",
+                    size: 1024,
+                },
             },
             messages: {
                 "name": {
@@ -164,6 +173,35 @@
                 "link_file": {
                     required: "Link Berkas Kelengkapan wajib diisi",
                     url: "Format Link Berkas Kelengkapan tidak valid",
+                },
+                "link_archive": {
+                    extension: "Format berkas pengesahan tidak valid. Hanya diperbolehkan file dengan ekstensi pdf, doc, docx, xls, xlsx, jpg, jpeg, png",
+                    size: "Ukuran maksimal berkas pengesahan adalah 1 MB",
+                },
+            },
+            errorElement: 'span',
+            errorClass: 'invalid-feedback',
+            highlight: function(element, errorClass, validClass) {
+                jQuery(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                jQuery(element).removeClass('is-invalid');
+            }
+        });
+    </script>
+    <script>
+        jQuery(".form-valide-archive").validate({
+            rules: {
+                "link_archive": {
+                    required: false,
+                    extension: "pdf|doc|docx|xls|xlsx|jpg|jpeg|png",
+                    size: 1024,
+                },
+            },
+            messages: {
+                "link_archive": {
+                    extension: "Format berkas pengesahan tidak valid. Hanya diperbolehkan file dengan ekstensi pdf, doc, docx, xls, xlsx, jpg, jpeg, png",
+                    size: "Ukuran maksimal berkas pengesahan adalah 1 MB",
                 },
             },
             errorElement: 'span',

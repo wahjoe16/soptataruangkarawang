@@ -387,7 +387,13 @@ class AjaxController extends Controller
                     return '<span class="badge bg-danger text-white">Ditolak / Dibatalkan</span>';
                 }
             })
-            ->rawColumns(['name', 'sop.code', 'address_application' , 'name_applicant', 'date_application', 'status'])
+            ->addColumn('action', function($applicationEvaluator){
+                $btn = '
+                            <a href="'.route('applications.evaluator.detail', $applicationEvaluator->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
+                       ';
+                return $btn;
+            })
+            ->rawColumns(['name', 'sop.code', 'address_application' , 'name_applicant', 'date_application', 'status', 'action'])
             ->make(true);
     }
 

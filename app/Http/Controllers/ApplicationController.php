@@ -92,6 +92,7 @@ class ApplicationController extends Controller
             'name_applicant' => 'required|string|max:255',
             'sop_id' => 'required',
             'name' => 'required|string|max:255',
+            'link_file' => 'required',
             'documents' => 'nullable|file',
         ]);
 
@@ -131,11 +132,21 @@ class ApplicationController extends Controller
     {
         // Validasi input
         $request->validate([
-            'link_archive' => 'max:255',
+            'link_archive' => 'file|mimes:pdf,doc,docx,jpg,jpeg,JPG,png|max:1024',
         ]);
 
         $application = Application::find($id);
-        $application->link_archive = $request->input('link_archive');
+
+        // upload file link_archive
+        if ($request->hasFile('link_archive')) {
+            $file = $request->file('link_archive');
+            $filename = 'archive_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = public_path('archives/');
+            $file->move($path, $filename);
+
+            $application->link_archive = $filename;
+        }
+
         $application->save();
         
         return redirect()->route('applications.index')->with('success', 'Arsip Berhasil Diupload!');

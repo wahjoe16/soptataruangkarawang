@@ -39,6 +39,7 @@
                                     <th class="text-muted">Nama Pemohon</th>
                                     <th class="text-muted">Tanggal Pengajuan</th>
                                     <th class="text-muted">Status</th>
+                                    <th class="text-muted">Aksi</th>
                                 </tr>
                             </thead>
                         </table>
@@ -72,6 +73,7 @@
                         { data: 'name_applicant', name: 'name_applicant' },
                         { data: 'date_application', name: 'date_application' },
                         { data: 'status', name: 'status' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false },
                     ],
                 });
             });
