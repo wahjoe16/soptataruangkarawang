@@ -16,12 +16,41 @@
         <!-- Style -->
         <link rel="stylesheet" href="{{ ('/login_page/css/style.css') }}">
 
+        <style>
+            .preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                z-index: 9999;
+            }
+
+            .loader {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                position: absolute;
+            }
+        </style>
+
+        <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
+
         <title>Dinas Tata Ruang Kabupaten Karawang</title>
     </head>
     <body>
 
+        <div class="preloader">
+            <div class="loader">
+                <img src="{{ asset('/login_page/images/loading.gif') }}" alt="" width="200px">
+            </div>
+        </div>
+
         <div class="d-lg-flex half">
-            <div class="bg order-1 order-md-2" style="background-image: url('/login_page/images/puprkabkarawang.jpg');"></div>
+            <div class="bg order-1 order-md-2" style="background-image: url('/login_page/images/puprkabkarawang.jpg');">
+            
+            </div>
             <div class="contents order-2 order-md-1">
                 <div class="container">
                     <div class="row align-items-center justify-content-center">
@@ -66,9 +95,17 @@
             </div>
         </div>
 
+        
+
         <script src="{{ ('/login_page/js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ ('/login_page/js/popper.min.js') }}"></script>
         <script src="{{ ('/login_page/js/bootstrap.min.js') }}"></script>
         <script src="{{ ('/login_page/js/main.js') }}"></script>
+        <script>
+            // Wait for the entire page to load
+            $(document).ready(function() {
+                $('.preloader').delay('2000').fadeOut();
+            });
+        </script>
     </body>
 </html>

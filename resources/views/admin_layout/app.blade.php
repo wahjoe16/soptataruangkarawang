@@ -7,14 +7,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Dinas Tata Ruang Kab. Karawang | {{ $title }} </title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/focus/images/favicon.png') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('/focus/vendor/owl-carousel/css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/focus/vendor/owl-carousel/css/owl.theme.default.min.css') }}">
-    <link href="{{ asset('/focus/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet"> --}}
+    <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/png" sizes="16x16">
     <link href="{{ asset('/focus/css/style.css') }}" rel="stylesheet">
 
     {{-- MDI icons --}}
     <link rel="stylesheet" href="{{ asset('/public/focus/vendor/mdi/css/materialdesignicons.min.css') }}">
+
+    <style>
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+        }
+
+        .loader {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+        }
+    </style>
 
     @stack('top_css')
 
@@ -22,14 +38,9 @@
 
 <body>
 
-    <!--*******************
-        Preloader start
-    ********************-->
-    <div id="preloader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
+    <div class="preloader">
+        <div class="loader">
+            <img src="{{ asset('/login_page/images/loading.gif') }}" alt="" width="200px">
         </div>
     </div>
     <!--*******************
@@ -123,29 +134,12 @@
     <script src="{{ asset('/focus/js/quixnav-init.js') }}"></script>
     <script src="{{ asset('/focus/js/custom.min.js') }}"></script>
 
-
-    <!-- Vectormap -->
-    {{-- <script src="{{ asset('/focus/vendor/raphael/raphael.min.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/morris/morris.min.js') }}"></script> --}}
-
-    
-    {{-- <script src="{{ asset('/focus/vendor/circle-progress/circle-progress.min.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/chart.js/Chart.bundle.min.js') }}"></script>
-
-    <script src="{{ asset('/focus/vendor/gaugeJS/dist/gauge.min.js') }}"></script> --}}
-
-    <!--  flot-chart js -->
-    {{-- <script src="{{ asset('/focus/vendor/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/flot/jquery.flot.resize.js') }}"></script> --}}
-
-    <!-- Owl Carousel -->
-    {{-- <script src="{{ asset('/focus/vendor/owl-carousel/js/owl.carousel.min.js') }}"></script> --}}
-
-    <!-- Counter Up -->
-    {{-- <script src="{{ asset('/focus/vendor/jqvmap/js/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/jqvmap/js/jquery.vmap.usa.js') }}"></script>
-    <script src="{{ asset('/focus/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script> --}}
-
+    <script>
+        // Wait for the entire page to load
+        $(document).ready(function() {
+            $('.preloader').delay('200').fadeOut();
+        });
+    </script>
 
     <script src="{{ asset('/focus/js/dashboard/dashboard-1.js') }}"></script>
 
