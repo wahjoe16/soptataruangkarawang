@@ -122,6 +122,17 @@ class ApplicationController extends Controller
             }
             $application->date_deadline = date('Y-m-d', $date);
         }
+
+        // delete data in application_activities table
+        $appAct = ApplicationActivity::where('application_id', $id);
+
+        if ($appAct->exists()) {
+            $appAct->delete();
+        }
+
+        $application->status = 0; // reset status to 0 (in review) after update
+        $application->user_id = null; // reset assigned evaluator
+
         
         $application->save();
 
@@ -299,5 +310,20 @@ class ApplicationController extends Controller
         ];
 
         return view('application.history_applications_evaluator', $data);
+    }
+
+    public function sop1ExpiredDetail($id)
+    {
+        $application = Application::where('id', $id)
+            ->with(['sop', 'user'])
+            ->first();
+
+        $data = [
+            'menuDashboard' => 'active',
+            'title' => 'Detail Permohonan SOP 1 Lebih dari 3 bulan',
+            'application' => $application,
+        ];
+
+        return view('application.sop1_expired_detail', $data);
     }
 }

@@ -58,7 +58,7 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="brand-title" src="{{ asset('/focus/images/logo_pupr.jpg') }}" alt="">
+                <img class="brand-title" src="{{ asset('/focus/images/logopupr.png') }}" alt="" style="margin-left: 50px;" >
             </a>
 
             <div class="nav-control">

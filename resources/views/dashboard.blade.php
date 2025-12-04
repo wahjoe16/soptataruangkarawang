@@ -275,6 +275,46 @@
         
     @endif
 
+    @if (Auth::user()->level == "Evaluator" || Auth::user()->level == "Ketua Tim" || Auth::user()->level == "Kepala Bidang")
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Data Permohonan SOP 1 yang sudah 3 bulan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th style="color: black;">Rencana Kegiatan</th>
+                                        <th style="color: black;">Pemohon</th>
+                                        <th style="color: black;">Evaluator</th>
+                                        <th style="color: black;">Tanggal Disahkan</th>
+                                        <th style="color: black;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($applications3months10days as $index => $app)
+                                        <tr>
+                                            <td class="text-muted">{{ $app->name }}</td>
+                                            <td class="text-muted">{{ $app->name_applicant }}</td>
+                                            <td class="text-muted">{{ $app->user->name }}</td>
+                                            <td class="text-muted" style="text-align: center;">{{ date('d M Y', strtotime($app->date_deadline)) }}</td>
+                                            <td>
+                                                <a href="{{ route('applications.sop1.expired.detail', $app->id) }}" class="btn btn-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 @push('bottom_scripts')

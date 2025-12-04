@@ -92,6 +92,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/evaluator-applications/finish/{id}', [ApplicationController::class, 'finishStatusApplication'])->name('applications.evaluator.finish');
     Route::put('/evaluator-applications/reject/{id}', [ApplicationController::class, 'rejectStatusApplication'])->name('applications.evaluator.reject');
     Route::get('/history-applications/{id}', [ApplicationController::class, 'historyApplication'])->name('history.applications');
+
+
+    // Permohonan SOP 1 yang sudah 3 bulan dari tanggal di sahkan
+    Route::get('/applications/sop1/{id}/expired-detail', [ApplicationController::class, 'sop1ExpiredDetail'])->name('applications.sop1.expired.detail');
 });
 
 Route::middleware('auth')->group(function () {
