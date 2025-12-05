@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address_application')->nullable();
             $table->date('date_application')->nullable();
             $table->text('description')->nullable();
-            $table->string('link_file')->nullable();
+            $table->text('link_file')->nullable();
             $table->string('documents')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0: pending, 1: approved, 2: rejected');
             $table->timestamps();

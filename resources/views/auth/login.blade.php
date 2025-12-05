@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="{{ ('/login_page/fonts/icomoon/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/login_page/fonts/icomoon/style.css') }}">
 
-        <link rel="stylesheet" href="{{ ('/login_page/css/owl.carousel.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/login_page/css/owl.carousel.min.css') }}">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="{{ ('/login_page/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/login_page/css/bootstrap.min.css') }}">
         
         <!-- Style -->
-        <link rel="stylesheet" href="{{ ('/login_page/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/login_page/css/style.css') }}">
 
         <style>
             .preloader {
@@ -48,7 +48,7 @@
         </div>
 
         <div class="d-lg-flex half">
-            <div class="bg order-1 order-md-2" style="background-image: url('/login_page/images/puprkabkarawang.jpg');">
+            <div class="bg order-1 order-md-2" style="background-image: asset('/login_page/images/puprkabkarawang.jpg');">
             
             </div>
             <div class="contents order-2 order-md-1">
@@ -97,10 +97,10 @@
 
         
 
-        <script src="{{ ('/login_page/js/jquery-3.3.1.min.js') }}"></script>
-        <script src="{{ ('/login_page/js/popper.min.js') }}"></script>
-        <script src="{{ ('/login_page/js/bootstrap.min.js') }}"></script>
-        <script src="{{ ('/login_page/js/main.js') }}"></script>
+        <script src="{{ asset('/login_page/js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ asset('/login_page/js/popper.min.js') }}"></script>
+        <script src="{{ asset('/login_page/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/login_page/js/main.js') }}"></script>
         <script>
             // Wait for the entire page to load
             $(document).ready(function() {

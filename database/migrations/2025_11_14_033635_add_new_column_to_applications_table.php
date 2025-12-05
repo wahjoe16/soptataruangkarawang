@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('applications', function (Blueprint $table) {
-            $table->string('link_archive')->after('link_file')->nullable();
+            $table->text('link_archive')->after('link_file')->nullable();
         });
     }
 

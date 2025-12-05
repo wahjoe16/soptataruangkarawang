@@ -5,8 +5,8 @@
     <link href="{{ asset('/focus/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
     <!-- Pick date -->
-    <link rel="stylesheet" href="{{ ('/focus/vendor/pickadate/themes/default.css') }}">
-    <link rel="stylesheet" href="{{ ('/focus/vendor/pickadate/themes/default.date.css') }}">
+    <link rel="stylesheet" href="{{ asset('/focus/vendor/pickadate/themes/default.css') }}">
+    <link rel="stylesheet" href="{{ asset('/focus/vendor/pickadate/themes/default.date.css') }}">
 @endpush
 
 @section('content')
@@ -325,12 +325,12 @@
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 
     <!-- pickdate -->
-    <script src="{{ ('/focus/vendor/pickadate/picker.js') }}"></script>
-    <script src="{{ ('/focus/vendor/pickadate/picker.time.js') }}"></script>
-    <script src="{{ ('/focus/vendor/pickadate/picker.date.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/pickadate/picker.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/pickadate/picker.time.js') }}"></script>
+    <script src="{{ asset('/focus/vendor/pickadate/picker.date.js') }}"></script>
 
     <!-- Pickdate -->
-    <script src="{{ ('/focus/js/plugins-init/pickadate-init.js') }}"></script>
+    <script src="{{ asset('/focus/js/plugins-init/pickadate-init.js') }}"></script>
 
     {{-- Validation application create --}}
     <script src="{{ asset('/focus/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
