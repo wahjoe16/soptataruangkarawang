@@ -32,7 +32,7 @@
                             @if (empty($user->photo))
                                 <img class="img-fluid rounded-circle" src="{{ asset('/focus/images/avatar/1.png') }}" alt="">
                             @else
-                                <img src="{{ asset('/user/photo/'. Auth::user()->photo) }}" class="img-fluid rounded-circle" alt="">
+                                <img src="{{ asset('storage/user/photo/'. $user->photo) }}" class="img-fluid rounded-circle" alt="">
                             @endif
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                                 </div>
                                                 <div class="form-group col-12">
                                                     <label>Jabatan</label>
-                                                    <input type="text" class="form-control input-rounded" name="level" @error('level') is-invalid @enderror value="{{ $user->level }}" disabled>
+                                                    <input type="text" class="form-control input-rounded" name="level" @error('level') is-invalid @enderror value="{{ $user->level }}" readonly>
                                                 </div>
                                                 <div class="form-group col-12">
                                                     <label>Foto</label>

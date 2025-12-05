@@ -9,6 +9,7 @@ use App\Models\Sop;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -148,14 +149,30 @@ class ApplicationController extends Controller
 
         $application = Application::find($id);
 
-        // upload file link_archive
-        if ($request->hasFile('link_archive')) {
-            $file = $request->file('link_archive');
-            $filename = 'archive_' . time() . '.' . $file->getClientOriginalExtension();
-            $path = public_path('archives/');
-            $file->move($path, $filename);
+        $publicHtmlPath = "/home/u741066030/domains/e-soptataruangkarawang.id/public_html";
 
-            $application->link_archive = $filename;
+        if ($request->hasFile('link_archive')) {
+
+            // Hapus file lama
+            if (!empty($application->link_archive)) {
+                $oldFile = $publicHtmlPath . '/storage/archives/' . $application->link_archive;
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+
+            // Upload file baru
+            $file = $request->file('link_archive');
+            $name = 'archive_' . time() . '.' . $file->getClientOriginalExtension();
+
+            // simpan ke public_html/storage/user/photo
+            $file->move($publicHtmlPath . '/storage/archives', $name);
+
+            $application->link_archive = $name;
+
+        } else {
+            // jika tidak ada file yang diupload, biarkan link_archive tetap sama
+            $application->link_archive = $request->current_archive;
         }
 
         $application->save();
@@ -235,8 +252,6 @@ class ApplicationController extends Controller
             
         ];
 
-        
-        
         return view('application.view_evaluator', $data);
     }
 

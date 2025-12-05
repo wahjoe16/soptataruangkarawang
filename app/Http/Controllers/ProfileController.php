@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -56,19 +57,29 @@ class ProfileController extends Controller
         $user->email = $request['email'] ?? '' ;
         $user->level = $request['level'] ?? '' ;
 
+        $publicHtmlPath = "/home/u741066030/domains/e-soptataruangkarawang.id/public_html";
+
         if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            if (!is_null($photo)) {
-                File::delete(public_path('/user/photo/' . $user->photo));
-                $name = "user_" . time() . "." . $photo->getClientOriginalExtension();
-                $path = public_path('/user/photo');
-                $photo->move($path, $name);
-                $user->photo = $name;
-            } elseif (!empty($request['current_photo'])) {
-                $user->photo = $request['current_photo'];
-            } else {
-                $user->photo = "";
+
+            // Hapus file lama
+            if (!empty($user->photo)) {
+                $oldFile = $publicHtmlPath . '/storage/user/photo/' . $user->photo;
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
             }
+
+            // Upload file baru
+            $file = $request->file('photo');
+            $name = 'user_' . time() . '.' . $file->getClientOriginalExtension();
+
+            // simpan ke public_html/storage/user/photo
+            $file->move($publicHtmlPath . '/storage/user/photo', $name);
+
+            $user->photo = $name;
+
+        } else {
+            $user->photo = $request->current_photo;
         }
         
         $user->save();

@@ -81,7 +81,7 @@
                             @if (empty(Auth::user()->photo))
                                 <img width="35" src="{{ asset('/focus/images/avatar/1.png') }}" alt="">
                             @else
-                                <img width="35" src="{{ asset('/user/photo/'. Auth::user()->photo) }}" alt="">
+                                <img width="35" src="{{ asset('storage/user/photo/'. Auth::user()->photo) }}" alt="">
                             @endif
                             
                         </a><h6>{{ Auth::user()->name }}</h6>

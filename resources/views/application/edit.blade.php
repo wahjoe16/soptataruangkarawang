@@ -97,8 +97,9 @@
                                     <div class="form-group col-12">
                                         <label class="text-muted">Upload Arsip Pengesahan <small class="text-danger">(maksimum size: 1MB)</small></label>
                                         <input type="file" class="form-control input-rounded" name="link_archive" @error('link_archive') is-invalid @enderror value="{{ $app['link_archive'] }}">
+                                        <input type="hidden" name="current_archive" value="{{ $app->link_archive }}">
                                         @if ($app->link_archive != null)
-                                            <small class="form-text text-muted">Berkas arsip saat ini: <a href="{{ asset('archives/' . $app->link_archive) }}" target="_blank">{{ $app->link_archive }}</a></small>
+                                            <small class="form-text text-muted">Berkas arsip saat ini: <a href="{{ asset('storage/archives/' . $app->link_archive) }}" target="_blank">{{ $app->link_archive }}</a></small>
                                             
                                         @endif
                                     </div>
