@@ -28,6 +28,12 @@ Route::get('/', fn () => redirect()->route('login'));
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    // Information center
+    Route::get('/information-center', [DashboardController::class, 'info'])->name('dashboard.info');
+
+    // Ajax Yajra dashboard permohonan sop 1 3 bulan
+    Route::get('/history-3months-sop1', [AjaxController::class, 'three_months_sop_one'])->name('three_months.applications.data');
+
     // Ajax Yajra Datatable Administrator
     Route::get('/users/data', [AjaxController::class, 'userData'])->name('users.data');
     Route::get('/sop/data', [AjaxController::class, 'sopData'])->name('sop.data');
@@ -46,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/applications-view/data', [AjaxController::class, 'applicationViewData'])->name('applications.view.data');
     Route::get('/history-applications/data', [AjaxController::class, 'historyApplicationData'])->name('history.applications.data');
     Route::get('/view-evaluator/{id}/data', [AjaxController::class, 'viewEvaluatorData'])->name('view.evaluator.data');
+    Route::get('/view-evaluator-finis/{id}/data', [AjaxController::class, 'viewFinishEvaluatorData'])->name('view-finish.evaluator.data');
     
     // manajemen user (Admin)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -96,6 +103,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Permohonan SOP 1 yang sudah 3 bulan dari tanggal di sahkan
     Route::get('/applications/sop1/{id}/expired-detail', [ApplicationController::class, 'sop1ExpiredDetail'])->name('applications.sop1.expired.detail');
+    Route::put('/check-applications/sop1/{id}/expired-detail', [ApplicationController::class, 'cekSop1ExpiredDetail'])->name('cek.applications.sop1.expired.detail');
 });
 
 Route::middleware('auth')->group(function () {

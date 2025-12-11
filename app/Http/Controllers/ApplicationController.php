@@ -303,10 +303,17 @@ class ApplicationController extends Controller
         return redirect()->route('evaluatorApplication.view')->with('success', 'Status Permohonan Telah Selesai!');
     }
 
-    public function rejectStatusApplication($id)
+    public function rejectStatusApplication(Request $request, $id)
     {
         $application = Application::find($id);
+
+        // validation description required if status reject (2)
+        $request->validate([
+            'description' => 'required_if:status,2',
+        ]);
+
         $application->status = 2;
+        $application->description = $request->input('description');
         $application->save();
 
         return redirect()->route('evaluatorApplication.view')->with('success', 'Status Permohonan Dibatalkan!');
@@ -340,5 +347,14 @@ class ApplicationController extends Controller
         ];
 
         return view('application.sop1_expired_detail', $data);
+    }
+
+    public function cekSop1ExpiredDetail($id)
+    {
+        $application = Application::find($id);
+        $application->check_report = 1;
+        $application->save();
+
+        return redirect()->route('dashboard')->with('success', 'Permohonan SOP 1 berhasil di Cek!');
     }
 }

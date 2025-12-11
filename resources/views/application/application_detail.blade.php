@@ -73,6 +73,10 @@
                                     <th class="text-muted">Arsip Pengesahan</th>
                                     <td class="text-muted"><strong><a href="{{ asset('storage/archives/' . $application->link_archive) }}" target="_blank">{{ $application->link_archive }}</a></strong></td>
                                 @endif
+                                @if ($application['status'] == 2)
+                                    <th class="text-muted">Keterangan Penolakan</th>
+                                    <td class="text-muted"><strong>{{ $application['description'] }}</strong></td>
+                                @endif
                             </tbody>
                         </table>
                     </div>

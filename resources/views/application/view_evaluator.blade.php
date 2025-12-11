@@ -64,11 +64,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">List Permohonan {{ $evaluatorApplication->name }}</h4>
+                    <h4 class="card-title">Permohonan On Progress {{ $evaluatorApplication->name }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table verticle-middle table-responsive-sm">
+                        <table class="table verticle-middle table-responsive-sm table-progress">
                             <thead>
                                 <tr>
                                     <th class="text-muted">Rencana Kegiatan</th>
@@ -87,15 +87,42 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">History Permohonan {{ $evaluatorApplication->name }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table verticle-middle table-responsive-sm table-finish">
+                            <thead>
+                                <tr>
+                                    <th class="text-muted">Rencana Kegiatan</th>
+                                    <th class="text-muted">SOP</th>
+                                    <th class="text-muted">Pemohon</th>
+                                    <th class="text-muted">Lokasi Rencana Kegiatan</th>
+                                    <th class="text-muted">Tanggal Permohonan</th>
+                                    <th class="text-muted">Status</th>
+                                    <th class="text-muted">Keterangan</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('bottom_scripts')
     <!-- Datatable -->
     <script src="{{ asset('/focus/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script>
-        let table;
-        $(document).ready(function() {
-            table = $('.table').DataTable({
+        let table, table1;
+        $(function() {
+            table = $('.table-progress').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -111,6 +138,24 @@
                     { data: 'sisa_waktu', name: 'sisa_waktu' },
                 ],
             });
+
+            table1 = $('.table-finish').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('view-finish.evaluator.data', ['id' => $evaluatorApplication->name]) }}",
+                },
+                columns: [
+                    { data: 'name', name: 'name' },
+                    { data: 'code', name: 'code' },
+                    { data: 'name_applicant', name: 'name_applicant' },
+                    { data: 'address_application', name: 'address_application' },
+                    { data: 'date_application', name: 'date_application' },
+                    { data: 'status', name: 'status' },
+                    { data: 'description', name: 'description' },
+                ],
+            });
         });
+        
     </script>
 @endpush

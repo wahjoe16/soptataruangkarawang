@@ -27,23 +27,29 @@ class DashboardController extends Controller
         $sop = Sop::get();
 
         // Permohonan SOP 1 yang sudah 3 bulan dari tanggal disahkan
+        // $applications3months = Application::where('sop_id', 1)
+        //     ->with(['sop', 'user'])
+        //     ->where('status', 1)
+        //     ->get()
+        //     ->filter(function ($application) {
+        //         $dateApproved = \Carbon\Carbon::parse($application->date_deadline);
+        //         // $expirationDate = $dateApproved->copy()->addMonths(3)->addDays(10);
+        //         $expirationDate = $dateApproved->copy()->addMonths(3);
+        //         return \Carbon\Carbon::now()->greaterThan($expirationDate);
+        //     });
+
         $applications3months = Application::where('sop_id', 1)
             ->with(['sop', 'user'])
             ->where('status', 1)
-            ->get()
-            ->filter(function ($application) {
-                $dateApproved = \Carbon\Carbon::parse($application->date_deadline);
-                // $expirationDate = $dateApproved->copy()->addMonths(3)->addDays(10);
-                $expirationDate = $dateApproved->copy()->addMonths(3);
-                return \Carbon\Carbon::now()->greaterThan($expirationDate);
-            });
+            ->whereDate('date_deadline', '<=', Carbon::now()->subMonths(3))
+            ->get();
         
         // permohonan SOP 1 yang lebih dari 3 bulan dan kurang dari 3 bulan 10 hari
         $applications3months10days = $applications3months->filter(function ($application) {
             $dateApproved = \Carbon\Carbon::parse($application->date_deadline);
             $expirationDateStart = $dateApproved->copy()->addMonths(3);
             $expirationDateEnd = $dateApproved->copy()->addMonths(3)->addDays(10);
-            return \Carbon\Carbon::now()->greaterThan($expirationDateStart) && \Carbon\Carbon::now()->lessThanOrEqualTo($expirationDateEnd);
+            return \Carbon\Carbon::now()->greaterThan($expirationDateStart) || \Carbon\Carbon::now()->lessThanOrEqualTo($expirationDateEnd);
         });
 
         // dd($applications3months);
@@ -168,8 +174,17 @@ class DashboardController extends Controller
             'evaluator' => $evaluator,
             'distribusiData' => $distribusiData,
             'applications3months10days' => $applications3months10days,
+            'applications3months' => $applications3months
         ];
         
         return view('dashboard', $data);
+    }
+
+    public function info()
+    {
+        $data = [
+            'title' => 'Information Center',
+        ];   
+        return view('info', $data);
     }
 }

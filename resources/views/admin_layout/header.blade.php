@@ -98,6 +98,10 @@
                                     <span class="ml-2">Logout </span>                
                                 </button>
                             </form>
+                            <a href="{{ route('dashboard.info') }}" class="dropdown-item">
+                                <i class="icon-info"></i>
+                                <span class="ml-2">Info </span>
+                            </a>
                             {{-- <a href="{{ route('logout') }}" class="dropdown-item">
                                 <i class="icon-key"></i>
                                 <span class="ml-2">Logout </span>

@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Application;
 use App\Models\Sop;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,10 +38,14 @@ class AjaxController extends Controller
             })
             ->addColumn('action', function($user){
                 $deleteUrl = route('users.delete', $user->id);
+                // $btn = '
+                //             <a href="'.route('users.view', $user->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
+                //             <a href="'.route('users.edit', $user->id).'" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>
+                //             <a href="javascript:void(0)" data-url="'.$deleteUrl.'" data-id="'. $user->id .'" class="btn btn-outline-danger btn-sm confirmDelete"><i class="icon-trash"></i></a>
+                //         ';
                 $btn = '
                             <a href="'.route('users.view', $user->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
                             <a href="'.route('users.edit', $user->id).'" class="btn btn-outline-warning btn-sm"><i class="icon-pencil"></i></a>
-                            <a href="javascript:void(0)" data-url="'.$deleteUrl.'" data-id="'. $user->id .'" class="btn btn-outline-danger btn-sm confirmDelete"><i class="icon-trash"></i></a>
                         ';
                     
                 return $btn;
@@ -155,7 +160,7 @@ class AjaxController extends Controller
 
     public function evaluatorApplicationData()
     {
-        $applicationEvaluator = Application::with('sop')->where(['user_id' => Auth::user()->id, 'status' => 0])->get();
+        $applicationEvaluator = Application::with('sop')->where(['user_id' => Auth::user()->id, 'status' => 0])->orderBy('date_application', 'asc')->get();
 
         return datatables()->of($applicationEvaluator)
             ->addIndexColumn()
@@ -484,6 +489,89 @@ class AjaxController extends Controller
             ->rawColumns(['name', 'code', 'name_applicant', 'address_application', 'date_application', 'date_deadline', 'sisa_waktu'])
             ->make(true);
 
+    }
+
+    public function viewFinishEvaluatorData($id)
+    {
+        $user = User::where('name', $id)->first();
+
+        $evaluatorApplication = $user->allApplications()->with('sop')->where(function ($q) {
+            $q->where('status', 1)
+              ->orWhere('status', 2);
+        })->get();
+
+        return datatables()->of($evaluatorApplication)
+            ->addIndexColumn()
+            ->addColumn('name', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->name.'</p>';
+            })
+            ->addColumn('code', function($evaluatorApplication){
+                return '<p class="text-muted" title="'.$evaluatorApplication->sop->name.'">'.$evaluatorApplication->sop->code.'</p>';
+            })
+            ->addColumn('name_applicant', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->name_applicant.'</p>';
+            })
+            ->addColumn('address_application', function($evaluatorApplication){
+                return '<p class="text-muted">'.$evaluatorApplication->address_application.'</p>';
+            })
+            ->addColumn('date_application', function($evaluatorApplication){
+                return '<p class="text-muted">'.date('d M Y', strtotime($evaluatorApplication->date_application)).'</p>';
+            })
+            ->addColumn('status', function($evaluatorApplication){
+                if ($evaluatorApplication['status'] == 1) {
+                    return '<span class="badge bg-info text-white">Selesai</span>';
+                }  else {
+                    return '<span class="badge bg-danger text-white">Ditolak / Dibatalkan</span>';
+                }
+            })
+            ->addColumn('description', function($evaluatorApplication){
+                if ($evaluatorApplication['description'] == null){
+                    return '<p class="text-muted" style="text-align:center;"> - </p>';
+                } else {
+                    return '<p class="text-muted">'.$evaluatorApplication->description.'</p>';
+                }
+            })
+            ->rawColumns(['name', 'code', 'name_applicant', 'address_application', 'date_application', 'status', 'description'])
+            ->make(true);
+    }
+
+    public function three_months_sop_one()
+    {
+        $applications3months = Application::where('sop_id', 1)
+            ->with(['sop', 'user'])
+            ->where('status', 1)
+            ->whereDate('date_deadline', '<=', Carbon::now()->subMonths(3))
+            ->get();
+
+        return datatables()->of($applications3months)
+            ->addIndexColumn()
+            ->addColumn('name', function($applications3months){
+                return '<p class="text-muted">'.$applications3months->name.'</p>';
+            })
+            ->addColumn('name_applicant', function($applications3months){
+                return '<p class="text-muted">'.$applications3months->name_applicant.'</p>';
+            })
+            ->addColumn('user_id', function($applications3months){
+                return '<p class="text-muted">'.$applications3months->user->name.'</p>';
+            })
+            ->addColumn('date_deadline', function($applications3months){
+                return '<p class="text-muted">'.date('d M Y', strtotime($applications3months->date_deadline)).'</p>';
+            })
+            ->addColumn('check_report', function($applications3months){
+                if ($applications3months['check_report'] != null) {
+                    return '<span class="badge bg-success text-white">Sudah Dicek</span>';
+                }  else {
+                    return '<span class="badge bg-danger text-white">Belum Dicek</span>';
+                }
+            })
+            ->addColumn('action', function($applications3months) {
+                $btn = '
+                            <a href="'.route('applications.sop1.expired.detail', $applications3months->id).'" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a>
+                       ';
+                return $btn;
+            })
+            ->rawColumns(['name', 'code', 'name_applicant', 'user_id', 'date_deadline', 'check_report', 'action'])
+            ->make(true);
     }
 
 }

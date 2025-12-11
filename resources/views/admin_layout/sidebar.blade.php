@@ -13,7 +13,7 @@
                         <i class="icon-user"></i><span class="nav-text">User</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('sop.index') }}" aria-expanded="false">
                         <i class="icon icon-app-store"></i><span class="nav-text">SOP</span>
                     </a>
@@ -22,7 +22,7 @@
                     <a href="{{ route('activity.index') }}" aria-expanded="false">
                         <i class="icon icon-plug"></i><span class="nav-text">Kegiatan SOP</span>
                     </a>
-                </li>
+                </li> --}}
             @endif
 
             @if (Auth::user()->level == "Front Office")

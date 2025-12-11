@@ -284,26 +284,30 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-responsive-sm">
+                            <table class="table table-responsive-sm table-3">
                                 <thead>
                                     <tr>
-                                        <th style="color: black;">Rencana Kegiatan</th>
-                                        <th style="color: black;">Pemohon</th>
-                                        <th style="color: black;">Evaluator</th>
-                                        <th style="color: black;">Tanggal Disahkan</th>
-                                        <th style="color: black;">Aksi</th>
+                                        <th class="text-muted">Rencana Kegiatan</th>
+                                        <th class="text-muted">Pemohon</th>
+                                        <th class="text-muted">Evaluator</th>
+                                        <th class="text-muted">Tanggal Disahkan</th>
+                                        <th class="text-muted">Status</th>
+                                        <th class="text-muted">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($applications3months10days as $index => $app)
+                                    @foreach ($applications3months as $app)
                                         <tr>
-                                            <td class="text-muted">{{ $app->name }}</td>
-                                            <td class="text-muted">{{ $app->name_applicant }}</td>
-                                            <td class="text-muted">{{ $app->user->name }}</td>
-                                            <td class="text-muted" style="text-align: center;">{{ date('d M Y', strtotime($app->date_deadline)) }}</td>
-                                            <td>
-                                                <a href="{{ route('applications.sop1.expired.detail', $app->id) }}" class="btn btn-primary btn-sm"><i class="mdi mdi-magnify"></i></a>
-                                            </td>
+                                            <td class="text-muted">{{ $app['name'] }}</td>
+                                            <td class="text-muted">{{ $app['name_applicant'] }}</td>
+                                            <td class="text-muted">{{ $app['user']['name'] }}</td>
+                                            <td class="text-muted">{{ date('d M Y', strtotime($app->date_deadline)) }}</td>
+                                            @if ($app['check_report'] == null)
+                                                <td><span class="badge bg-danger text-white">Belum Dicek</span></td>
+                                            @else
+                                                <td><span class="badge bg-success text-white">Sudah Dicek</span></td>
+                                            @endif
+                                            <td><a href="{{ route('applications.sop1.expired.detail', $app->id) }}" class="btn btn-outline-primary btn-sm"><i class="mdi mdi-magnify"></i>&nbsp;</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -404,7 +408,7 @@
     </script>
 
     <script>
-        let table, tableHistory;
+        let table, tableHistory, table_3;
 
         $(function() {
             table = $('.applications-table').DataTable({
@@ -435,6 +439,21 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
+
+            // tableHistory = $('.table-3').DataTable({
+            //     processing: false,
+            //     serverSide: true,
+            //     ajax: '{{ route('three_months.applications.data') }}',
+            //     columns: [
+            //         {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            //         {data: 'name', name: 'name'},
+            //         {data: 'name_applicant', name: 'name_applicant'},
+            //         {data: 'user_id', name: 'user_id'},
+            //         {data: 'date_deadline', name: 'date_deadline'},
+            //         {data: 'check_report', name: 'check_report'},
+            //         {data: 'action', name: 'action', orderable: false, searchable: false},
+            //     ]
+            // });
         });
     </script>
 

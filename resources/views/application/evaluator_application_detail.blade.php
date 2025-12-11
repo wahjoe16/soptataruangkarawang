@@ -69,6 +69,10 @@
                                     <th class="text-muted">Arsip Pengesahan</th>
                                     <td class="text-muted"><strong><a href="{{ asset('storage/archives/' . $application->link_archive) }}" target="_blank">{{ $application->link_archive }}</a></strong></td>
                                 @endif
+                                @if ($application['status'] == 2)
+                                    <th class="text-muted">Keterangan Penolakan</th>
+                                    <td class="text-muted"><strong>{{ $application['description'] }}</strong></td>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -114,13 +118,22 @@
                     @method('PUT')
                     <button type="button" onclick="confirmFinish({{ $application['id'] }})" class="btn btn-primary btn-sm mr-3">Selesai</button>
                 </form>
-                
-                <form id="reject-form-{{ $application['id'] }}" action="{{ route('applications.evaluator.reject', $application['id']) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="button" onclick="confirmReject({{ $application['id'] }})" class="btn btn-danger btn-sm">Tolak Permohonan</button>
-                </form>
             </div>
+            <form class="mt-3" id="reject-form-{{ $application['id'] }}" action="{{ route('applications.evaluator.reject', $application['id']) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <button type="button" onclick="confirmReject({{ $application['id'] }})" class="btn btn-danger btn-sm">Tolak Permohonan</button>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label class="text-muted">Keterangan Penolakan</label>
+                            <textarea name="description" id="description" class="form-control" @error('description') is-invalid @enderror" cols="30" rows="10"></textarea>
+                            @error('description') <span class="help-block">{{$message}}</span> @enderror
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
         </div>
     </div>
     
