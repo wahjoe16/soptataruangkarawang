@@ -90,6 +90,10 @@
                                 <i class="icon-user"></i>
                                 <span class="ml-2">Profile </span>
                             </a>
+                            <a href="{{ route('dashboard.info') }}" class="dropdown-item">
+                                <i class="icon-info"></i>
+                                <span class="ml-2">Info </span>
+                            </a>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button onclick="event.preventDefault();
@@ -98,10 +102,6 @@
                                     <span class="ml-2">Logout </span>                
                                 </button>
                             </form>
-                            <a href="{{ route('dashboard.info') }}" class="dropdown-item">
-                                <i class="icon-info"></i>
-                                <span class="ml-2">Info </span>
-                            </a>
                             {{-- <a href="{{ route('logout') }}" class="dropdown-item">
                                 <i class="icon-key"></i>
                                 <span class="ml-2">Logout </span>
